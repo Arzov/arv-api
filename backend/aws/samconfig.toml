@@ -1,0 +1,10 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "arv"
+s3_bucket = "@S3_BUCKET"
+s3_prefix = "arv"
+region = "@REGION"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"

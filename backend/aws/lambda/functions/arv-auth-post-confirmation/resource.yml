@@ -1,0 +1,7 @@
+
+  ARVAuthPostConfirmation:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: arv-auth-post-confirmation
+      CodeUri: lambda/functions/arv-auth-post-confirmation/
+      Role: @LAMBDA_ROLE

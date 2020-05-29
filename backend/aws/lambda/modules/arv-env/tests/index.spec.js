@@ -1,4 +1,4 @@
-const arv_env = require('../index');
+const arv_env = require('../index')
 
 test('Variables AWS DynamoDB', () => {
   expect(arv_env.db.ARV_USERS).toBe('ARV_USERS')

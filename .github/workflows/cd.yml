@@ -1,0 +1,33 @@
+# Continuous Deployment
+name: CD
+
+on:
+  pull_request:
+    types: [ closed ] 
+    branches: [ master, develop ]
+
+jobs:
+
+  deploy-backend:
+    # Solo ejecutar si se resolvió el pull request y la rama es develop
+    if: github.event.pull_request.merged == true && github.ref == 'develop'
+
+    name: Deploy backend en AWS
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_DEV }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_DEV }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION_DEV }}
+      AWS_LAMBDA_LAYER: ${{ secrets.AWS_LAMBDA_LAYER_DEV }}
+      AWS_LAMBDA_ROLE: ${{ secrets.AWS_LAMBDA_ROLE_DEV }}
+      AWS_S3_ARTIFACTS_BUCKET: ${{ secrets.AWS_S3_ARTIFACTS_BUCKET_DEV }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Deploy
+        run: |
+          cd backend/aws
+          chmod +x deploy.sh
+          ./deploy.sh
