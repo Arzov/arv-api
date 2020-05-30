@@ -1,10 +1,14 @@
-// LIBRERIAS
-const AWS = require('aws-sdk');
+/**
+ * Verificar usuario en AWS DynamoDB
+ * @version 1.0.0
+ * @author Franco Barrientos <franco.barrientos@arzov.com>
+ */
 
-// PARAMETROS
-const dynamodb = new AWS.DynamoDB();
-const COGNITO_USER_POOL_CLI_ID = '15metijanb2iq6a016tqk832ek';
-const COGNITO_USER_POOL_ID = 'us-east-2_qutDL1uPU';
+
+const aws = require('aws-sdk');
+const arv_env = require('arv-env');
+const dynamodb = new aws.DynamoDB();
+const COGNITO_USER_POOL_CLI_ID = arv_env.cg.COGNITO_USER_POOL_CLI_ID;
 const DYNAMO_TABLE_USERS = 'ARV_USERS';
 
 // FUNCIONES

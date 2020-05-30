@@ -1,0 +1,27 @@
+{
+   "version": "1",
+   "region": "us-east-2",
+   "userPoolId": "us-east-2_qutDL1uPU",
+   "userName": "Facebook_10217846363663521",
+   "callerContext": {
+      "awsSdkVersion": "aws-sdk-unknown-unknown",
+      "clientId": "15metijanb2iq6a016tqk832ek"
+   },
+   "triggerSource": "PreSignUp_ExternalProvider",
+   "request": {
+      "userAttributes": {
+         "cognito:email_alias": "",
+         "name": "Franco",
+         "cognito:phone_number_alias": "",
+         "family_name": "Barrientos",
+         "email": "fjbarrientosg@gmail.com",
+         "picture": "{\"data\":{\"height\":50,\"is_silhouette\":false,\"url\":\"https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10217846363663521&height=50&width=50&ext=1593462184&hash=AeT6ufYDgveULGEG\",\"width\":50}}"
+      },
+      "validationData": {}
+   },
+   "response": {
+      "autoConfirmUser": false,
+      "autoVerifyEmail": false,
+      "autoVerifyPhone": false
+   }
+}

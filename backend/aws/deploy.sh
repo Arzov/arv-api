@@ -10,6 +10,7 @@
 # ----------------------------------------------------------
 
 chmod +x template_generator.sh; ./template_generator.sh
+status=$?
 
 
 # ----------------------------------------------------------
@@ -21,6 +22,7 @@ sed "s/@LAMBDA_LAYER/$AWS_LAMBDA_LAYER/g;s+@LAMBDA_ROLE+$AWS_LAMBDA_ROLE+g" temp
 
 # AWS SAM build
 sam build -t template_tmp.yml
+status=$((status + $?))
 
 
 # ----------------------------------------------------------
@@ -33,12 +35,13 @@ sed "s/@S3_BUCKET/$AWS_S3_ARTIFACTS_BUCKET/g;s/@REGION/$AWS_DEFAULT_REGION/g" sa
 # AWS SAM deploy
 cd .aws-sam/build/
 sam deploy --no-confirm-changeset
-status=$?
+status=$((status + $?))
 
 # Remover archivos temporales
 cd ../../
 rm template_tmp.yml
 rm template.yml
 rm -R .aws-sam
+status=$((status + $?))
 
 exit $status
