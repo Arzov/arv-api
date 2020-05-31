@@ -28,13 +28,18 @@ status=$((status + $?))
 #  Pruebas AWS Lambda
 # ----------------------------------------------------------
 
-cd lambda/functions/arv-auth-pre-signup; npm install; npm run test
+cd lambda/functions
+
+cd arv-auth-pre-signup; npm install; npm run test; cd ../
+status=$((status + $?))
+
+cd arv-auth-post-confirmation; npm install; npm run test; cd ../
 status=$((status + $?))
 
 kill -9 $pids
 
 # Remover archivos temporales
-cd ../../../
+cd ../../
 rm template_tmp.yml
 rm template.yml
 status=$((status + $?))
