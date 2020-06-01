@@ -1,8 +1,8 @@
 
-  ARV:
-    Type: AWS::Serverless::LayerVersion
+  LDLayerARV:
+    Type: AWS::Lambda::LayerVersion
     Properties:
-        LayerName: arv
-        ContentUri: lambda/layers/arv/arv-nodejs.zip
-        CompatibleRuntimes:
-          - nodejs12.x
+      LayerName: arv
+      Content: lambda/layers/arv/
+      CompatibleRuntimes:
+        - nodejs12.x

@@ -8,7 +8,5 @@ Globals:
     Timeout: 180
     Handler: index.handler
     Runtime: nodejs12.x
-    Layers:
-      - @LAMBDA_LAYER
 
 Resources:

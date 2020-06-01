@@ -18,7 +18,7 @@ status=$?
 # ----------------------------------------------------------
 
 # Reemplazar variables en archivo template.yml
-sed "s/@LAMBDA_LAYER/$AWS_LAMBDA_LAYER/g;s+@LAMBDA_ROLE+$AWS_LAMBDA_ROLE+g" template.yml > template_tmp.yml
+sed "s+@LAMBDA_ROLE+$AWS_LAMBDA_ROLE+g" template.yml > template_tmp.yml
 
 # AWS SAM build
 sam build -t template_tmp.yml

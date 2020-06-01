@@ -1,5 +1,5 @@
 
-  ARVUsers:
+  DBTableARVUsers:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:

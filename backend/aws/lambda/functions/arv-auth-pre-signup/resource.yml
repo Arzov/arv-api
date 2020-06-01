@@ -1,7 +1,10 @@
 
-  ARVAuthPreSignup:
+  LDFunctionARVAuthPreSignup:
     Type: AWS::Serverless::Function
+    DependsOn: LDLayerARV
     Properties:
       FunctionName: arv-auth-pre-signup
       CodeUri: lambda/functions/arv-auth-pre-signup/
       Role: @LAMBDA_ROLE
+      Layers:
+        - !Ref LDLayerARV
