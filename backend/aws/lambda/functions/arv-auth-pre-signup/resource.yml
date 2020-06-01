@@ -8,3 +8,9 @@
       Role: @LAMBDA_ROLE
       Layers:
         - !Ref LDLayerARV
+      Events:
+        CognitoEvent:
+          Type: Cognito
+          Properties:
+            Trigger: PreSignUp
+            UserPool: !Ref CGUserPoolARVAuth

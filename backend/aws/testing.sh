@@ -18,7 +18,7 @@ status=$?
 # ----------------------------------------------------------
 
 # Reemplazar variables en archivo template.yml
-sed "s+@LAMBDA_ROLE+$AWS_LAMBDA_ROLE+g" template.yml > template_tmp.yml
+sed "s/@AWS_COGNITO_AUTH_DOMAIN/$AWS_COGNITO_AUTH_DOMAIN/g;s+@LAMBDA_ROLE+$AWS_LAMBDA_ROLE+g" template.yml > template_tmp.yml
 
 sam local start-lambda -t template_tmp.yml & pids="${pids-} $!"
 status=$((status + $?))

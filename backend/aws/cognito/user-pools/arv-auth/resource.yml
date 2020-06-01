@@ -1,0 +1,30 @@
+
+  CGUserPoolARVAuth:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: arv-auth
+      AutoVerifiedAttributes:
+        - email
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 6
+      Schema:
+        - Name: email
+          AttributeDataType: String
+          Mutable: false
+          Required: true
+
+        - Name: name
+          AttributeDataType: String
+          Mutable: true
+          Required: false
+        
+        - Name: birthdate
+          AttributeDataType: String
+          Mutable: true
+          Required: false
+        
+        - Name: gender
+          AttributeDataType: String
+          Mutable: true
+          Required: false

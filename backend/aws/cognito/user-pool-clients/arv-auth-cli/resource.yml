@@ -1,0 +1,26 @@
+
+  CGUserPoolClientARVAuthCli:
+    Type: AWS::Cognito::UserPoolClient
+    DependsOn:
+      - CGUserPoolIdentityProviderARVAuthGoogle
+      - CGUserPoolIdentityProviderARVAuthFacebook
+    Properties:
+      ClientName: arv-auth-cli
+      UserPoolId: !Ref CGUserPoolARVAuth
+      AllowedOAuthFlowsUserPoolClient: true
+      AllowedOAuthFlows:
+        - code
+      AllowedOAuthScopes:
+        - phone
+        - email
+        - openid
+        - profile
+        - aws.cognito.signin.user.admin
+      CallbackURLs:
+        - http://localhost:3000
+      LogoutURLs:
+        - http://localhost:3000
+      SupportedIdentityProviders:
+        - COGNITO
+        - Facebook
+        - Google

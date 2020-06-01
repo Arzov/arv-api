@@ -18,7 +18,7 @@ status=$?
 # ----------------------------------------------------------
 
 # Reemplazar variables en archivo template.yml
-sed "s+@LAMBDA_ROLE+$AWS_LAMBDA_ROLE+g" template.yml > template_tmp.yml
+sed "s/@FACEBOOK_APP_ID/$FACEBOOK_APP_ID/g;s/@FACEBOOK_APP_SECRET/$FACEBOOK_APP_SECRET/g;s/@GOOGLE_APP_ID/$GOOGLE_APP_ID/g;s/@GOOGLE_APP_SECRET/$GOOGLE_APP_SECRET/g;s/@AWS_COGNITO_AUTH_DOMAIN/$AWS_COGNITO_AUTH_DOMAIN/g;s+@LAMBDA_ROLE+$AWS_LAMBDA_ROLE+g" template.yml > template_tmp.yml
 
 # AWS SAM build
 sam build -t template_tmp.yml

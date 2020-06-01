@@ -16,6 +16,7 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_DEV }}
       AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION_DEV }}
       AWS_LAMBDA_ROLE: ${{ secrets.AWS_LAMBDA_ROLE_DEV }}
+      AWS_COGNITO_AUTH_DOMAIN: ${{ secrets.AWS_COGNITO_AUTH_DOMAIN_DEV }}
 
     steps:
       - uses: actions/checkout@v2
