@@ -1,6 +1,6 @@
 
-  CGUserPoolDomainARVAuthDomain:
+  CGUserPoolDomainARV:
     Type: AWS::Cognito::UserPoolDomain
     Properties: 
       Domain: @AWS_COGNITO_AUTH_DOMAIN
-      UserPoolId: !Ref CGUserPoolARVAuth
+      UserPoolId: !Ref CGUserPoolARV

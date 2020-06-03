@@ -1,8 +1,8 @@
 
-  CGUserPoolARVAuth:
+  CGUserPoolARV:
     Type: AWS::Cognito::UserPool
     Properties:
-      UserPoolName: arv-auth
+      UserPoolName: arv
       AutoVerifiedAttributes:
         - email
       Policies:

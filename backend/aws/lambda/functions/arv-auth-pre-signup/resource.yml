@@ -5,7 +5,7 @@
     Properties:
       FunctionName: arv-auth-pre-signup
       CodeUri: lambda/functions/arv-auth-pre-signup/
-      Role: @LAMBDA_ROLE
+      Role: @AWS_LAMBDA_ROLE
       Layers:
         - !Ref LDLayerARV
       Events:
@@ -13,4 +13,4 @@
           Type: Cognito
           Properties:
             Trigger: PreSignUp
-            UserPool: !Ref CGUserPoolARVAuth
+            UserPool: !Ref CGUserPoolARV

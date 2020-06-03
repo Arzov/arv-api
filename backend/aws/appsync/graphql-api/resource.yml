@@ -1,0 +1,11 @@
+
+  ASGraphQLApiARV:
+    Type: AWS::AppSync::GraphQLApi
+    DependsOn: CGUserPoolARV
+    Properties:
+      AuthenticationType: AMAZON_COGNITO_USER_POOLS
+      Name: arv-auth
+      UserPoolConfig:
+        DefaultAction: ALLOW
+        AwsRegion: @AWS_DEFAULT_REGION
+        UserPoolId: !Ref CGUserPoolARV

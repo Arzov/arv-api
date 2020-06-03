@@ -1,12 +1,12 @@
 
-  CGUserPoolClientARVAuthCli:
+  CGUserPoolClientARV:
     Type: AWS::Cognito::UserPoolClient
     DependsOn:
-      - CGUserPoolIdentityProviderARVAuthGoogle
-      - CGUserPoolIdentityProviderARVAuthFacebook
+      - CGUserPoolIdentityProviderARVGoogle
+      - CGUserPoolIdentityProviderARVFacebook
     Properties:
-      ClientName: arv-auth-cli
-      UserPoolId: !Ref CGUserPoolARVAuth
+      ClientName: arv
+      UserPoolId: !Ref CGUserPoolARV
       AllowedOAuthFlowsUserPoolClient: true
       AllowedOAuthFlows:
         - code

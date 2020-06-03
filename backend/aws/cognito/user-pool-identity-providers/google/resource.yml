@@ -1,0 +1,16 @@
+
+  CGUserPoolIdentityProviderARVGoogle:
+    Type: AWS::Cognito::UserPoolIdentityProvider
+    Properties:
+      UserPoolId: !Ref CGUserPoolARV
+      ProviderName: "Google"
+      ProviderDetails:
+        client_id: @GOOGLE_APP_ID
+        client_secret: @GOOGLE_APP_SECRET
+        authorize_scopes: "profile email openid"
+      ProviderType: "Google"
+      AttributeMapping:
+        email: "email"
+        name: "given_name"
+        family_name: "family_name"
+        picture: "picture"
