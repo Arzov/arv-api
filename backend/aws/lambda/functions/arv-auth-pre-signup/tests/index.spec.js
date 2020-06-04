@@ -3,7 +3,7 @@ const event01 = require('../events/event01.json')
 const event02 = require('../events/event02.json')
 const event03 = require('../events/event03.json')
 
-describe("Test AWS Lambda: arv-auth-pre-signup", () => {
+describe('Test AWS Lambda: arv-auth-pre-signup', () => {
 
   let lambda = new aws.Lambda({
     apiVersion: '2015-03-31',
@@ -25,8 +25,15 @@ describe("Test AWS Lambda: arv-auth-pre-signup", () => {
         console.log(err)
         expect(err.StatusCode).toBe(400)
       } else {
+        let response = JSON.parse(data.Payload)
+
         expect(data.StatusCode).toBe(200)
-        expect(data.Payload).toBe('{"version":"1","region":"us-east-2","userPoolId":"us-east-2_qutDL1uPU","userName":"Google_115619098971084199595","callerContext":{"awsSdkVersion":"aws-sdk-unknown-unknown","clientId":"15metijanb2iq6a016tqk832ek"},"triggerSource":"PreSignUp_ExternalProvider","request":{"userAttributes":{"cognito:email_alias":"","name":"Franco","cognito:phone_number_alias":"","family_name":"Barrientos","email":"fjbarrientosg@gmail.com","picture":"https://lh3.googleusercontent.com/a-/AOh14GgWjEj2cnH3clfJHqQiMnQ7yqFiZ3ImefchqcWxPQ=s96-c"},"validationData":{}},"response":{"autoConfirmUser":false,"autoVerifyEmail":false,"autoVerifyPhone":false}}')
+        expect(response.region).toBe('us-east-2')
+        expect(response.triggerSource).toBe('PreSignUp_ExternalProvider')
+        expect(response.userName).toBe('Google_115619098971084199595')
+        expect(response.request.userAttributes.email).toBe('fjbarrientosg@gmail.com')
+        expect(response.request.userAttributes.name).toBe('Franco')
+        expect(response.request.userAttributes.family_name).toBe('Barrientos')
       }
 
       done()
@@ -42,8 +49,15 @@ describe("Test AWS Lambda: arv-auth-pre-signup", () => {
         console.log(err)
         expect(err.StatusCode).toBe(400)
       } else {
+        let response = JSON.parse(data.Payload)
+
         expect(data.StatusCode).toBe(200)
-        expect(data.Payload).toBe('{"version":"1","region":"us-east-2","userPoolId":"us-east-2_qutDL1uPU","userName":"Facebook_10217846363663521","callerContext":{"awsSdkVersion":"aws-sdk-unknown-unknown","clientId":"15metijanb2iq6a016tqk832ek"},"triggerSource":"PreSignUp_ExternalProvider","request":{"userAttributes":{"cognito:email_alias":"","name":"Franco","cognito:phone_number_alias":"","family_name":"Barrientos","email":"fjbarrientosg@gmail.com","picture":"{\\"data\\":{\\"height\\":50,\\"is_silhouette\\":false,\\"url\\":\\"https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10217846363663521\\u0026height=50\\u0026width=50\\u0026ext=1593462184\\u0026hash=AeT6ufYDgveULGEG\\",\\"width\\":50}}"},"validationData":{}},"response":{"autoConfirmUser":false,"autoVerifyEmail":false,"autoVerifyPhone":false}}')
+        expect(response.region).toBe('us-east-2')
+        expect(response.triggerSource).toBe('PreSignUp_ExternalProvider')
+        expect(response.userName).toBe('Facebook_10217846363663521')
+        expect(response.request.userAttributes.email).toBe('fjbarrientosg@gmail.com')
+        expect(response.request.userAttributes.name).toBe('Franco')
+        expect(response.request.userAttributes.family_name).toBe('Barrientos')
       }
 
       done()
@@ -59,8 +73,11 @@ describe("Test AWS Lambda: arv-auth-pre-signup", () => {
         console.log(err)
         expect(err.StatusCode).toBe(400)
       } else {
+        let response = JSON.parse(data.Payload)
+
         expect(data.StatusCode).toBe(200)
-        expect(data.Payload).toBe('{"errorType":"Error","errorMessage":"#¡El email ya se ha registrado con Facebook y Google!#"}')
+        expect(response.errorMessage).toBe('#¡El email ya se ha registrado con Facebook y Google!#')
+        expect(response.errorType).toBe('Error')
       }
 
       done()

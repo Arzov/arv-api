@@ -9,7 +9,7 @@
 #  Generar template.yml
 # ----------------------------------------------------------
 
-chmod +x template_generator.sh; ./template_generator.sh
+chmod +x samtemplate.sh; ./samtemplate.sh
 status=$?
 
 

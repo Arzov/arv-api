@@ -16,7 +16,12 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_DEV }}
       AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION_DEV }}
       AWS_LAMBDA_ROLE: ${{ secrets.AWS_LAMBDA_ROLE_DEV }}
+      AWS_APPSYNC_ROLE: ${{ secrets.AWS_APPSYNC_ROLE_DEV }}
       AWS_COGNITO_AUTH_DOMAIN: ${{ secrets.AWS_COGNITO_AUTH_DOMAIN_DEV }}
+      FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_APP_ID_DEV }}
+      FACEBOOK_APP_SECRET: ${{ secrets.FACEBOOK_APP_SECRET_DEV }}
+      GOOGLE_APP_ID: ${{ secrets.GOOGLE_APP_ID_DEV }}
+      GOOGLE_APP_SECRET: ${{ secrets.GOOGLE_APP_SECRET_DEV }}
 
     steps:
       - uses: actions/checkout@v2

@@ -4,7 +4,7 @@
     DependsOn: CGUserPoolARV
     Properties:
       AuthenticationType: AMAZON_COGNITO_USER_POOLS
-      Name: arv-auth
+      Name: arv
       UserPoolConfig:
         DefaultAction: ALLOW
         AwsRegion: @AWS_DEFAULT_REGION

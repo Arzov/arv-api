@@ -6,8 +6,7 @@
 
 
 const aws = require('aws-sdk');
-const arv_env = require('arv-env');
-const commons = require('utils/commons');
+const dql = require('utils/dql');
 const dynamodb = new aws.DynamoDB();
 
 
@@ -17,7 +16,7 @@ exports.handler = (event, context, callback) => {
     let hashKey = event.request.userAttributes.email;
 
     if (provider === 'Cognito') {
-        commons.mt.updateUser(dynamodb, arv_env.db.ARV_USERS, hashKey, function(err, data) {
+        dql.updateUser(dynamodb, process.env.DB_ARV_USERS, hashKey, function(err, data) {
             if (err) callback(err);
             else callback(null, event);
         });

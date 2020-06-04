@@ -1,11 +1,11 @@
 {
    "version": "1",
    "region": "us-east-2",
-   "userPoolId": "us-east-2_qutDL1uPU",
+   "userPoolId": "",
    "userName": "Google_115619098971084199595",
    "callerContext": {
       "awsSdkVersion": "aws-sdk-unknown-unknown",
-      "clientId": "15metijanb2iq6a016tqk832ek"
+      "clientId": ""
    },
    "triggerSource": "PostConfirmation_ConfirmSignUp",
    "request": {

@@ -6,8 +6,7 @@
 
 
 const aws = require('aws-sdk');
-const arv_env = require('arv-env');
-const commons = require('utils/commons');
+const dql = require('utils/dql');
 const moment = require('moment');
 const cognito = new aws.CognitoIdentityServiceProvider();
 const dynamodb = new aws.DynamoDB();
@@ -40,7 +39,7 @@ exports.handler = (event, context, callback) => {
     }
 
     // Buscar si usuario existe en DynamoDB
-    commons.mt.getUser(dynamodb, arv_env.db.ARV_USERS, hashKey, function(err, data) {
+    dql.getUser(dynamodb, process.env.DB_ARV_USERS, hashKey, function(err, data) {
         if (err) callback(err);
         else {
             // El usuario existe
@@ -67,7 +66,7 @@ exports.handler = (event, context, callback) => {
                         registeredGender = registeredGender === ' ' ? gender : registeredGender;
                         registeredPicture = registeredPicture === ' ' ? picture : registeredPicture;
 
-                        commons.mt.updateUser(dynamodb, arv_env.db.ARV_USERS, hashKey, registeredProviders,
+                        dql.updateUser(dynamodb, process.env.DB_ARV_USERS, hashKey, registeredProviders,
                             JSON.stringify(registeredProviderId), verified, registeredLastName,
                             registeredBirthdate, registeredGender, registeredPicture, function(err, data) {
                             if (err) callback(err);
@@ -91,7 +90,7 @@ exports.handler = (event, context, callback) => {
                                         ProviderAttributeValue: event.userName,
                                         ProviderName: provider
                                     },
-                                    UserPoolId: arv_env.cg.ARV_USER_POOL_ID
+                                    UserPoolId: event.userPoolId
                                 };
 
                                 // Se enlaza al usuario
@@ -124,7 +123,7 @@ exports.handler = (event, context, callback) => {
 
             // No existe el usuario
             else {
-                commons.mt.addUser(dynamodb, arv_env.db.ARV_USERS, hashKey, registerDate, firstName, lastName,
+                dql.addUser(dynamodb, process.env.DB_ARV_USERS, hashKey, registerDate, firstName, lastName,
                     providers, providerId, verified, birthdate, gender, picture, function(err, data) {
                     if (err) callback(err);
                     else callback(null, event);
