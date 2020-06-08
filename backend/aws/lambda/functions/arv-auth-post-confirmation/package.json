@@ -1,5 +1,5 @@
 {
-  "name": "arv-user-post-confirmation",
+  "name": "arv-auth-post-confirmation",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "files": [
     "index.js",
-    "utils/commons.js"
+    "utils/"
   ],
   "author": "",
   "license": "ISC",

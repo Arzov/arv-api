@@ -7,7 +7,16 @@
 
 const aws = require('aws-sdk');
 const dql = require('utils/dql');
-const dynamodb = new aws.DynamoDB();
+let options = { apiVersion: '2012-08-10' }
+
+if (process.env.RUN_MODE === 'LOCAL') {
+	options.endpoint = 'http://arzov:8000'
+	options.accessKeyId = 'xxxx'
+	options.secretAccessKey = 'xxxx'
+	options.region = 'localhost'
+}
+
+const dynamodb = new aws.DynamoDB(options);
 
 
 exports.handler = (event, context, callback) => {

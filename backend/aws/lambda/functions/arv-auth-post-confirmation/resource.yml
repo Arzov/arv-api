@@ -13,4 +13,5 @@
             UserPool: !Ref CGUserPoolARV
       Environment:
         Variables:
+          RUN_MODE: SERVER
           DB_ARV_USERS: !Ref DBTableARVUsers

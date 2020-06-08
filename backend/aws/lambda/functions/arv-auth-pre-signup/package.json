@@ -8,7 +8,7 @@
   },
   "files": [
     "index.js",
-    "utils/commons.js"
+    "utils/"
   ],
   "author": "",
   "license": "ISC",
