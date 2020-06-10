@@ -22,7 +22,7 @@ const updateUser = (db, tableName, hashKey, fn) => {
         }
     },
     function(err, data) {
-        if (err) return fn(err);
+        if (err) fn(err);
         else fn(null, data);
     });
 }

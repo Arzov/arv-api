@@ -55,7 +55,7 @@ const addUser = (db, tableName, hashKey, registerDate, firstName, lastName, prov
             "picture": { S: picture }
         }
     }, function(err, data) {
-        if (err) return fn(err);
+        if (err) fn(err);
         else fn(null, data);
     });
 }
@@ -91,7 +91,7 @@ const updateUser = (db, tableName, hashKey, providers, providerId, verified, las
         }
     },
     function(err, data) {
-        if (err) return fn(err);
+        if (err) fn(err);
         else fn(null, data);
     });
 }
