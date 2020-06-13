@@ -7,5 +7,5 @@
         AwsRegion: @AWS_DEFAULT_REGION
         TableName: !Ref DBTableARVUsers
       Name: DBUsers
-      ServiceRoleArn: @AWS_APPSYNC_ROLE
+      ServiceRoleArn: !GetAtt IARoleARVAppSync.Arn
       Type: AMAZON_DYNAMODB

@@ -56,8 +56,6 @@ sed "
     s/@GOOGLE_APP_ID/$GOOGLE_APP_ID/g;
     s/@GOOGLE_APP_SECRET/$GOOGLE_APP_SECRET/g;
     s/@AWS_COGNITO_AUTH_DOMAIN/$AWS_COGNITO_AUTH_DOMAIN/g;
-    s+@AWS_LAMBDA_ROLE+$AWS_LAMBDA_ROLE+g;
-    s+@AWS_APPSYNC_ROLE+$AWS_APPSYNC_ROLE+g
 " template.yml > template_tmp.yml
 
 sam local start-lambda --docker-network arzov-local-network -t template_tmp.yml \

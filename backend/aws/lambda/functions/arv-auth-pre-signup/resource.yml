@@ -4,7 +4,7 @@
     Properties:
       FunctionName: arv-auth-pre-signup
       CodeUri: lambda/functions/arv-auth-pre-signup/
-      Role: @AWS_LAMBDA_ROLE
+      Role: !GetAtt IARoleARVLambda.Arn
       Events:
         CognitoEvent:
           Type: Cognito

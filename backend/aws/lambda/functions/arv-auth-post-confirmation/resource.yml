@@ -4,7 +4,7 @@
     Properties:
       FunctionName: arv-auth-post-confirmation
       CodeUri: lambda/functions/arv-auth-post-confirmation/
-      Role: @AWS_LAMBDA_ROLE
+      Role: !GetAtt IARoleARVLambda.Arn
       Events:
         CognitoEvent:
           Type: Cognito
