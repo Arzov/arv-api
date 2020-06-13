@@ -1,0 +1,13 @@
+Outputs:
+  DBTableARVUsersName:
+    Value: !Ref DBTableARVUsers
+    Export:
+      Name: ARV-DBTableARVUsersName
+  IARoleARVLambdaARN:
+    Value: !GetAtt IARoleARVLambda.Arn
+    Export:
+      Name: ARV-IARoleARVLambdaARN
+  IARoleARVAppSyncARN:
+    Value: !GetAtt IARoleARVAppSync.Arn
+    Export:
+      Name: ARV-IARoleARVAppSyncARN

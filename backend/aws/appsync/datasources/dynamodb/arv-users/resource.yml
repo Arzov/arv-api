@@ -1,0 +1,11 @@
+
+  ASDataSourceARVDBUsers:
+    Type: AWS::AppSync::DataSource
+    Properties: 
+      ApiId: !GetAtt ASGraphQLApiARV.ApiId
+      DynamoDBConfig: 
+        AwsRegion: @AWS_DEFAULT_REGION
+        TableName: !Ref DBTableARVUsers
+      Name: DBUsers
+      ServiceRoleArn: !GetAtt IARoleARVAppSync.Arn
+      Type: AMAZON_DYNAMODB

@@ -1,0 +1,23 @@
+{
+   "version": "1",
+   "region": "us-east-2",
+   "userPoolId": "",
+   "userName": "Google_115619098971084199595",
+   "callerContext": {
+      "awsSdkVersion": "aws-sdk-unknown-unknown",
+      "clientId": ""
+   },
+   "triggerSource": "PostConfirmation_ConfirmSignUp",
+   "request": {
+      "userAttributes": {
+         "sub": "81ce6d09-d419-4390-b138-68d6619bb589",
+         "identities": "[{\"userId\":\"115619098971084199595\",\"providerName\":\"Google\",\"providerType\":\"Google\",\"issuer\":null,\"primary\":true,\"dateCreated\":1590851317883}]",
+         "cognito:user_status": "EXTERNAL_PROVIDER",
+         "name": "Franco",
+         "family_name": "Barrientos",
+         "picture": "https://lh3.googleusercontent.com/a-/AOh14GgWjEj2cnH3clfJHqQiMnQ7yqFiZ3ImefchqcWxPQ=s96-c",
+         "email": "fjbarrientosg@gmail.com"
+      }
+   },
+   "response": {}
+}

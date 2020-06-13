@@ -1,0 +1,46 @@
+
+  ASResolverARVUpdateUser:
+    Type: AWS::AppSync::Resolver
+    Properties: 
+      ApiId: !GetAtt ASGraphQLApiARV.ApiId
+      DataSourceName: !GetAtt ASDataSourceARVDBUsers.Name
+      FieldName: updateUser
+      RequestMappingTemplate: >
+        {
+          "version" : "2017-02-28",
+          "operation" : "UpdateItem",
+          "key" : {
+              "hashKey": { "S": "$ctx.args.hashKey" }
+          },
+          "update" : {
+              "expression": "set firstName = :v1, lastName = :v2, birthdate = :v3, gender = :v4, picture = :v5",
+              "expressionValues" : {
+                  ":v1" : { "S" : "$ctx.args.firstName" },
+                  ":v2" : { "S" : "$ctx.args.lastName" },
+                  ":v3" : { "S" : "$ctx.args.birthdate" },
+                  ":v4" : { "S" : "$ctx.args.gender" },
+                  ":v5" : { "S" : "$ctx.args.picture" }
+              }
+          }
+        }
+      ResponseMappingTemplate: >
+        $util.toJson($ctx.result)
+      TypeName: Mutation
+
+  ASResolverARVGetUser:
+    Type: AWS::AppSync::Resolver
+    Properties: 
+      ApiId: !GetAtt ASGraphQLApiARV.ApiId
+      DataSourceName: !GetAtt ASDataSourceARVDBUsers.Name
+      FieldName: getUser
+      RequestMappingTemplate: >
+        {
+          "version": "2017-02-28",
+          "operation": "GetItem",
+          "key": {
+              "hashKey": $util.dynamodb.toDynamoDBJson($ctx.args.hashKey),
+          }
+        }
+      ResponseMappingTemplate: >
+        $util.toJson($ctx.result)
+      TypeName: Query

@@ -1,0 +1,27 @@
+{
+   "version": "1",
+   "region": "us-east-2",
+   "userPoolId": "",
+   "userName": "Google_115619098971084199595",
+   "callerContext": {
+      "awsSdkVersion": "aws-sdk-unknown-unknown",
+      "clientId": ""
+   },
+   "triggerSource": "PreSignUp_ExternalProvider",
+   "request": {
+      "userAttributes": {
+         "cognito:email_alias": "",
+         "name": "Franco",
+         "cognito:phone_number_alias": "",
+         "family_name": "Barrientos",
+         "email": "fjbarrientosg@gmail.com",
+         "picture": "https://lh3.googleusercontent.com/a-/AOh14GgWjEj2cnH3clfJHqQiMnQ7yqFiZ3ImefchqcWxPQ=s96-c"
+      },
+      "validationData": {}
+   },
+   "response": {
+      "autoConfirmUser": false,
+      "autoVerifyEmail": false,
+      "autoVerifyPhone": false
+   }
+}
