@@ -11,3 +11,7 @@ Outputs:
     Value: !GetAtt IARoleARVAppSync.Arn
     Export:
       Name: ARV-IARoleARVAppSyncARN
+  CGUserPoolARVId:
+    Value: !Ref CGUserPoolARV
+    Export:
+      Name: ARV-CGUserPoolARVId
