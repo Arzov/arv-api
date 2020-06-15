@@ -15,3 +15,15 @@ Outputs:
     Value: !Ref CGUserPoolARV
     Export:
       Name: ARV-CGUserPoolARVId
+  CGUserPoolClientARVId:
+    Value: !Ref CGUserPoolClientARV
+    Export:
+      Name: ARV-CGUserPoolClientARVId
+  CGUserPoolDomainARVId:
+    Value: !Ref CGUserPoolDomainARV
+    Export:
+      Name: ARV-CGUserPoolDomainARVId
+  ASGraphQLApiARVUrl:
+    Value: !GetAtt ASGraphQLApiARV.GraphQLUrl
+    Export:
+      Name: ARV-ASGraphQLApiARVUrl
