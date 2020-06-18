@@ -27,3 +27,7 @@ Outputs:
     Value: !GetAtt ASGraphQLApiARV.GraphQLUrl
     Export:
       Name: ARV-ASGraphQLApiARVUrl
+  CMCertificateARVARN:
+    Value: !Ref CMCertificateARV
+    Export:
+      Name: ARV-CMCertificateARVARN

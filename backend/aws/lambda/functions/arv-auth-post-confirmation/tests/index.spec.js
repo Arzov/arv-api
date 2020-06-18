@@ -7,7 +7,7 @@ describe('Test AWS Lambda: arv-auth-post-confirmation', () => {
 
   let lambda = new aws.Lambda({
     apiVersion: '2015-03-31',
-    region: 'us-east-2',
+    region: 'us-east-1',
     endpoint: 'http://127.0.0.1:3001',
     sslEnabled: false
   })
@@ -28,7 +28,7 @@ describe('Test AWS Lambda: arv-auth-post-confirmation', () => {
         let response = JSON.parse(data.Payload)
 
         expect(data.StatusCode).toBe(200)
-        expect(response.region).toBe('us-east-2')
+        expect(response.region).toBe('us-east-1')
         expect(response.triggerSource).toBe('PostConfirmation_ConfirmSignUp')
         expect(response.userName).toBe('Google_115619098971084199595')
         expect(response.request.userAttributes.email).toBe('fjbarrientosg@gmail.com')
@@ -52,7 +52,7 @@ describe('Test AWS Lambda: arv-auth-post-confirmation', () => {
         let response = JSON.parse(data.Payload)
 
         expect(data.StatusCode).toBe(200)
-        expect(response.region).toBe('us-east-2')
+        expect(response.region).toBe('us-east-1')
         expect(response.triggerSource).toBe('PostConfirmation_ConfirmSignUp')
         expect(response.userName).toBe('Facebook_10217846363663521')
         expect(response.request.userAttributes.email).toBe('fjbarrientosg@gmail.com')
@@ -76,7 +76,7 @@ describe('Test AWS Lambda: arv-auth-post-confirmation', () => {
         let response = JSON.parse(data.Payload)
 
         expect(data.StatusCode).toBe(200)
-        expect(response.region).toBe('us-east-2')
+        expect(response.region).toBe('us-east-1')
         expect(response.triggerSource).toBe('PostConfirmation_ConfirmSignUp')
         expect(response.userName).toBe('franco.barrientos@arzov.com')
         expect(response.request.userAttributes.email).toBe('franco.barrientos@arzov.com')

@@ -25,6 +25,7 @@ sed "
     s/@GOOGLE_APP_ID/$GOOGLE_APP_ID/g;
     s/@GOOGLE_APP_SECRET/$GOOGLE_APP_SECRET/g;
     s/@AWS_COGNITO_AUTH_DOMAIN/$AWS_COGNITO_AUTH_DOMAIN/g;
+    s/@AWS_R53_UMT_DOMAIN/$AWS_R53_UMT_DOMAIN/g;
 " template.yml > template_tmp.yml
 
 # AWS SAM build

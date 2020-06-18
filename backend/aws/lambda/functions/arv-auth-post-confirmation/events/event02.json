@@ -1,6 +1,6 @@
 {
    "version": "1",
-   "region": "us-east-2",
+   "region": "us-east-1",
    "userPoolId": "",
    "userName": "Facebook_10217846363663521",
    "callerContext": {
