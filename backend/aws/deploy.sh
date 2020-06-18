@@ -45,7 +45,7 @@ sed "
 
 # AWS SAM deploy
 cd .aws-sam/build/
-sam deploy --no-confirm-changeset
+sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
 status=$((status + $?))
 
 # Remover archivos temporales
