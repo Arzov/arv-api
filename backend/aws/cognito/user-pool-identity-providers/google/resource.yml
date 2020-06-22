@@ -5,8 +5,8 @@
       UserPoolId: !Ref CGUserPoolARV
       ProviderName: "Google"
       ProviderDetails:
-        client_id: @GOOGLE_APP_ID
-        client_secret: @GOOGLE_APP_SECRET
+        client_id: !Ref GoogleAppId
+        client_secret: !Ref GoogleAppSecret
         authorize_scopes: "profile email openid"
       ProviderType: "Google"
       AttributeMapping:

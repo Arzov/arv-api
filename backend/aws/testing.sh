@@ -48,18 +48,16 @@ cd ../../
 #  Levantar servicio AWS Lambda
 # ----------------------------------------------------------
 
-# Reemplazar variables en archivo template.yml
-sed "
-    s/@AWS_DEFAULT_REGION/$AWS_DEFAULT_REGION/g;
-    s/@FACEBOOK_APP_ID/$FACEBOOK_APP_ID/g;
-    s/@FACEBOOK_APP_SECRET/$FACEBOOK_APP_SECRET/g;
-    s/@GOOGLE_APP_ID/$GOOGLE_APP_ID/g;
-    s/@GOOGLE_APP_SECRET/$GOOGLE_APP_SECRET/g;
-    s/@AWS_COGNITO_AUTH_DOMAIN/$AWS_COGNITO_AUTH_DOMAIN/g;
-    s/@AWS_R53_UMT_DOMAIN/$AWS_R53_UMT_DOMAIN/g;
-" template.yml > template_tmp.yml
-
-sam local start-lambda --docker-network arzov-local-network -t template_tmp.yml \
+sam local start-lambda --docker-network arzov-local-network -t template.yml \
+    --parameter-overrides "
+        ParameterKey=AWSDefaultRegion,ParameterValue=$AWS_DEFAULT_REGION
+        ParameterKey=FacebookAppId,ParameterValue=$FACEBOOK_APP_ID
+        ParameterKey=FacebookAppSecret,ParameterValue=$FACEBOOK_APP_SECRET
+        ParameterKey=GoogleAppId,ParameterValue=$GOOGLE_APP_ID
+        ParameterKey=GoogleAppSecret,ParameterValue=$GOOGLE_APP_SECRET
+        ParameterKey=AWSCognitoAuthDomain,ParameterValue=$AWS_COGNITO_AUTH_DOMAIN
+        ParameterKey=AWSR53UMTDomain,ParameterValue=$AWS_R53_UMT_DOMAIN
+    " \
     --env-vars lambda/functions/env.json & pids="${pids-} $!"
 status=$((status + $?))
 
@@ -90,7 +88,6 @@ docker network rm arzov-local-network
 
 # Remover archivos temporales
 cd ../../
-rm template_tmp.yml
 rm template.yml
 status=$((status + $?))
 
