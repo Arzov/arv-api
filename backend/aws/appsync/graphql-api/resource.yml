@@ -7,5 +7,5 @@
       Name: arv
       UserPoolConfig:
         DefaultAction: ALLOW
-        AwsRegion: @AWS_DEFAULT_REGION
+        AwsRegion: !Ref AWSDefaultRegion
         UserPoolId: !Ref CGUserPoolARV

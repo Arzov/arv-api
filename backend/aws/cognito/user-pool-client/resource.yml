@@ -18,10 +18,10 @@
         - aws.cognito.signin.user.admin
       CallbackURLs:
         - http://localhost:3000
-        - https://@AWS_R53_UMT_DOMAIN
+        - !Sub https://${AWSR53UMTDomain}
       LogoutURLs:
         - http://localhost:3000
-        - https://@AWS_R53_UMT_DOMAIN
+        - !Sub https://${AWSR53UMTDomain}
       SupportedIdentityProviders:
         - COGNITO
         - Facebook

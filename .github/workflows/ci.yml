@@ -3,7 +3,7 @@ name: CI
 
 on:
   pull_request:
-    branches: [ master, develop ]
+    branches: [ master, release, develop ]
 
 jobs:
 
@@ -11,19 +11,50 @@ jobs:
     name: Test backend
     runs-on: ubuntu-latest
 
-    env:
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_DEV }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY_DEV }}
-      AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION_DEV }}
-      AWS_COGNITO_AUTH_DOMAIN: ${{ secrets.AWS_COGNITO_AUTH_DOMAIN_DEV }}
-      AWS_R53_UMT_DOMAIN: ${{ secrets.AWS_R53_UMT_DOMAIN_DEV }}
-      FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_APP_ID_DEV }}
-      FACEBOOK_APP_SECRET: ${{ secrets.FACEBOOK_APP_SECRET_DEV }}
-      GOOGLE_APP_ID: ${{ secrets.GOOGLE_APP_ID_DEV }}
-      GOOGLE_APP_SECRET: ${{ secrets.GOOGLE_APP_SECRET_DEV }}
-
     steps:
       - uses: actions/checkout@v2
+
+      - name: Variables para DEV
+        if: github.base_ref == 'develop'
+        run: |
+          echo ::set-env name=AWS_ACCESS_KEY_ID::${{ secrets.AWS_ACCESS_KEY_DEV }}
+          echo ::set-env name=AWS_SECRET_ACCESS_KEY::${{ secrets.AWS_SECRET_KEY_DEV }}
+          echo ::set-env name=AWS_DEFAULT_REGION::${{ secrets.AWS_REGION_DEV }}
+          echo ::set-env name=AWS_COGNITO_AUTH_DOMAIN::${{ secrets.AWS_COGNITO_AUTH_DOMAIN_DEV }}
+          echo ::set-env name=AWS_S3_ARTIFACTS_BUCKET::${{ secrets.AWS_S3_ARTIFACTS_BUCKET_DEV }}
+          echo ::set-env name=AWS_R53_UMT_DOMAIN::${{ secrets.AWS_R53_UMT_DOMAIN_DEV }}
+          echo ::set-env name=FACEBOOK_APP_ID::${{ secrets.FACEBOOK_APP_ID_DEV }}
+          echo ::set-env name=FACEBOOK_APP_SECRET::${{ secrets.FACEBOOK_APP_SECRET_DEV }}
+          echo ::set-env name=GOOGLE_APP_ID::${{ secrets.GOOGLE_APP_ID_DEV }}
+          echo ::set-env name=GOOGLE_APP_SECRET::${{ secrets.GOOGLE_APP_SECRET_DEV }}
+      
+      - name: Variables para STG
+        if: github.base_ref == 'release'
+        run: |
+          echo ::set-env name=AWS_ACCESS_KEY_ID::${{ secrets.AWS_ACCESS_KEY_STG }}
+          echo ::set-env name=AWS_SECRET_ACCESS_KEY::${{ secrets.AWS_SECRET_KEY_STG }}
+          echo ::set-env name=AWS_DEFAULT_REGION::${{ secrets.AWS_REGION_STG }}
+          echo ::set-env name=AWS_COGNITO_AUTH_DOMAIN::${{ secrets.AWS_COGNITO_AUTH_DOMAIN_STG }}
+          echo ::set-env name=AWS_S3_ARTIFACTS_BUCKET::${{ secrets.AWS_S3_ARTIFACTS_BUCKET_STG }}
+          echo ::set-env name=AWS_R53_UMT_DOMAIN::${{ secrets.AWS_R53_UMT_DOMAIN_STG }}
+          echo ::set-env name=FACEBOOK_APP_ID::${{ secrets.FACEBOOK_APP_ID_STG }}
+          echo ::set-env name=FACEBOOK_APP_SECRET::${{ secrets.FACEBOOK_APP_SECRET_STG }}
+          echo ::set-env name=GOOGLE_APP_ID::${{ secrets.GOOGLE_APP_ID_STG }}
+          echo ::set-env name=GOOGLE_APP_SECRET::${{ secrets.GOOGLE_APP_SECRET_STG }}
+
+      - name: Variables para PRD
+        if: github.base_ref == 'master'
+        run: |
+          echo ::set-env name=AWS_ACCESS_KEY_ID::${{ secrets.AWS_ACCESS_KEY_PRD }}
+          echo ::set-env name=AWS_SECRET_ACCESS_KEY::${{ secrets.AWS_SECRET_KEY_PRD }}
+          echo ::set-env name=AWS_DEFAULT_REGION::${{ secrets.AWS_REGION_PRD }}
+          echo ::set-env name=AWS_COGNITO_AUTH_DOMAIN::${{ secrets.AWS_COGNITO_AUTH_DOMAIN_PRD }}
+          echo ::set-env name=AWS_S3_ARTIFACTS_BUCKET::${{ secrets.AWS_S3_ARTIFACTS_BUCKET_PRD }}
+          echo ::set-env name=AWS_R53_UMT_DOMAIN::${{ secrets.AWS_R53_UMT_DOMAIN_PRD }}
+          echo ::set-env name=FACEBOOK_APP_ID::${{ secrets.FACEBOOK_APP_ID_PRD }}
+          echo ::set-env name=FACEBOOK_APP_SECRET::${{ secrets.FACEBOOK_APP_SECRET_PRD }}
+          echo ::set-env name=GOOGLE_APP_ID::${{ secrets.GOOGLE_APP_ID_PRD }}
+          echo ::set-env name=GOOGLE_APP_SECRET::${{ secrets.GOOGLE_APP_SECRET_PRD }}
 
       - name: Instalar AWS CLI 2
         run: |
