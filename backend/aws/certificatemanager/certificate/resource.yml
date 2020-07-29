@@ -1,9 +1,0 @@
-
-  CMCertificateARV:
-    Type: AWS::CertificateManager::Certificate
-    Properties: 
-      DomainName: arzov.com
-      SubjectAlternativeNames:
-        - "*.arzov.com"
-        - "*.umatch.arzov.com"
-      ValidationMethod: EMAIL
