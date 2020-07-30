@@ -1,0 +1,9 @@
+
+  CGIdentityPoolARV:
+    Type: AWS::Cognito::IdentityPool
+    Properties:
+      IdentityPoolName: arv
+      AllowUnauthenticatedIdentities: false
+      CognitoIdentityProviders:
+        - ClientId: !Ref CGUserPoolClientARV
+          ProviderName: !GetAtt CGUserPoolARV.ProviderName

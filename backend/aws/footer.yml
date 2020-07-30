@@ -35,3 +35,7 @@ Outputs:
     Value: !Ref S3BucketARVAssets
     Export:
       Name: ARV-S3BucketARVAssetsId
+  CGIdentityPoolARVId:
+    Value: !Ref CGIdentityPoolARV
+    Export:
+      Name: ARV-CGIdentityPoolARVId
