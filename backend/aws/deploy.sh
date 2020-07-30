@@ -27,6 +27,7 @@ sam build -t template.yml \
         ParameterKey=GoogleAppSecret,ParameterValue=$GOOGLE_APP_SECRET
         ParameterKey=AWSCognitoAuthDomain,ParameterValue=$AWS_COGNITO_AUTH_DOMAIN
         ParameterKey=AWSR53UMTDomain,ParameterValue=$AWS_R53_UMT_DOMAIN
+        ParameterKey=AWSS3AssetsBucket,ParameterValue=$AWS_S3_ASSETS_BUCKET
     "
 status=$((status + $?))
 
@@ -51,6 +52,7 @@ sam deploy --no-confirm-changeset \
         ParameterKey=GoogleAppSecret,ParameterValue=$GOOGLE_APP_SECRET
         ParameterKey=AWSCognitoAuthDomain,ParameterValue=$AWS_COGNITO_AUTH_DOMAIN
         ParameterKey=AWSR53UMTDomain,ParameterValue=$AWS_R53_UMT_DOMAIN
+        ParameterKey=AWSS3AssetsBucket,ParameterValue=$AWS_S3_ASSETS_BUCKET
     " \
     --no-fail-on-empty-changeset
 status=$((status + $?))

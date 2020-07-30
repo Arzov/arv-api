@@ -22,6 +22,7 @@ jobs:
           echo ::set-env name=AWS_DEFAULT_REGION::${{ secrets.AWS_REGION_DEV }}
           echo ::set-env name=AWS_COGNITO_AUTH_DOMAIN::${{ secrets.AWS_COGNITO_AUTH_DOMAIN_DEV }}
           echo ::set-env name=AWS_S3_ARTIFACTS_BUCKET::${{ secrets.AWS_S3_ARTIFACTS_BUCKET_DEV }}
+          echo ::set-env name=AWS_S3_ASSETS_BUCKET::${{ secrets.AWS_S3_ASSETS_BUCKET_DEV }}
           echo ::set-env name=AWS_R53_UMT_DOMAIN::${{ secrets.AWS_R53_UMT_DOMAIN_DEV }}
           echo ::set-env name=FACEBOOK_APP_ID::${{ secrets.FACEBOOK_APP_ID_DEV }}
           echo ::set-env name=FACEBOOK_APP_SECRET::${{ secrets.FACEBOOK_APP_SECRET_DEV }}
@@ -36,6 +37,7 @@ jobs:
           echo ::set-env name=AWS_DEFAULT_REGION::${{ secrets.AWS_REGION_STG }}
           echo ::set-env name=AWS_COGNITO_AUTH_DOMAIN::${{ secrets.AWS_COGNITO_AUTH_DOMAIN_STG }}
           echo ::set-env name=AWS_S3_ARTIFACTS_BUCKET::${{ secrets.AWS_S3_ARTIFACTS_BUCKET_STG }}
+          echo ::set-env name=AWS_S3_ASSETS_BUCKET::${{ secrets.AWS_S3_ASSETS_BUCKET_STG }}
           echo ::set-env name=AWS_R53_UMT_DOMAIN::${{ secrets.AWS_R53_UMT_DOMAIN_STG }}
           echo ::set-env name=FACEBOOK_APP_ID::${{ secrets.FACEBOOK_APP_ID_STG }}
           echo ::set-env name=FACEBOOK_APP_SECRET::${{ secrets.FACEBOOK_APP_SECRET_STG }}
@@ -50,6 +52,7 @@ jobs:
           echo ::set-env name=AWS_DEFAULT_REGION::${{ secrets.AWS_REGION_PRD }}
           echo ::set-env name=AWS_COGNITO_AUTH_DOMAIN::${{ secrets.AWS_COGNITO_AUTH_DOMAIN_PRD }}
           echo ::set-env name=AWS_S3_ARTIFACTS_BUCKET::${{ secrets.AWS_S3_ARTIFACTS_BUCKET_PRD }}
+          echo ::set-env name=AWS_S3_ASSETS_BUCKET::${{ secrets.AWS_S3_ASSETS_BUCKET_PRD }}
           echo ::set-env name=AWS_R53_UMT_DOMAIN::${{ secrets.AWS_R53_UMT_DOMAIN_PRD }}
           echo ::set-env name=FACEBOOK_APP_ID::${{ secrets.FACEBOOK_APP_ID_PRD }}
           echo ::set-env name=FACEBOOK_APP_SECRET::${{ secrets.FACEBOOK_APP_SECRET_PRD }}

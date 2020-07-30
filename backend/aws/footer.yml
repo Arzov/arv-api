@@ -31,3 +31,7 @@ Outputs:
     Value: !Ref CMCertificateARV
     Export:
       Name: ARV-CMCertificateARVARN
+  S3BucketARVAssetsId:
+    Value: !Ref S3BucketARVAssets
+    Export:
+      Name: ARV-S3BucketARVAssetsId

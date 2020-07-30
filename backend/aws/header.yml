@@ -24,5 +24,7 @@ Parameters:
     Type: String
   AWSR53UMTDomain: 
     Type: String
+  AWSS3AssetsBucket: 
+    Type: String
 
 Resources:

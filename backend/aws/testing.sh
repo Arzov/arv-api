@@ -57,6 +57,7 @@ sam local start-lambda --docker-network arzov-local-network -t template.yml \
         ParameterKey=GoogleAppSecret,ParameterValue=$GOOGLE_APP_SECRET
         ParameterKey=AWSCognitoAuthDomain,ParameterValue=$AWS_COGNITO_AUTH_DOMAIN
         ParameterKey=AWSR53UMTDomain,ParameterValue=$AWS_R53_UMT_DOMAIN
+        ParameterKey=AWSS3AssetsBucket,ParameterValue=$AWS_S3_ASSETS_BUCKET
     " \
     --env-vars lambda/functions/env.json & pids="${pids-} $!"
 status=$((status + $?))
