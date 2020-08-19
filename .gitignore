@@ -3,3 +3,7 @@ node_modules
 **/layers/**/nodejs
 **/layers/**/*.zip
 docs
+
+# Jekyll
+_site
+.jekyll-cache

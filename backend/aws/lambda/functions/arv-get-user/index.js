@@ -1,5 +1,5 @@
 /**
- * Verificar usuario en AWS DynamoDB
+ * Obtener usuario desde DynamoDB
  * @author Franco Barrientos <franco.barrientos@arzov.com>
  */
 
@@ -19,14 +19,10 @@ const dynamodb = new aws.DynamoDB(options);
 
 
 exports.handler = (event, context, callback) => {
-    let provider = event.userName.includes('@') ? 'Cognito' : event.userName.split('_')[0];
-    let hashKey = `USR#${event.request.userAttributes.email}`;
+    let hashKey = `USR#${event.hashKey}`;
 
-    if (provider === 'Cognito') {
-        dql.updateUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, function(err, data) {
-            if (err) callback(err);
-            else callback(null, event);
-        });
-    }
-    else callback(null, event);
+    dql.getUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, function(err, data) {
+        if (err) callback(err);
+        else callback(null, data);
+    });
 };

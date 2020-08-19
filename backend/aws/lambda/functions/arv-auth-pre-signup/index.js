@@ -1,6 +1,5 @@
 /**
  * Registrar usuario en AWS DynamoDB
- * @version 1.0.0
  * @author Franco Barrientos <franco.barrientos@arzov.com>
  */
 
@@ -22,14 +21,13 @@ const dynamodb = new aws.DynamoDB(options);
 
 
 exports.handler = (event, context, callback) => {
-    // Parametros del usuario
     let provider = event.userName.includes('@') ? 'Cognito' : event.userName.split('_')[0];
-    let hashKey = event.request.userAttributes.email;
+    let hashKey = `USR#${event.request.userAttributes.email}`;
     let registerDate = moment().format();
     let firstName = event.request.userAttributes.name;
     let lastName = event.request.userAttributes.family_name;
     let providers = [provider];
-    let providerId = '{"' + provider + '": "' + event.userName + '"}';
+    let providerId = JSON.parse(`{"${provider}":{"S":"${event.userName}"}}`);
     let verified = provider === 'Cognito' ? false : true;
     let birthdate = event.request.userAttributes.birthdate;
     let gender = event.request.userAttributes.gender;
@@ -48,13 +46,13 @@ exports.handler = (event, context, callback) => {
     }
 
     // Buscar si usuario existe en DynamoDB
-    dql.getUser(dynamodb, process.env.DB_ARV_USERS, hashKey, function(err, data) {
+    dql.getUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, function(err, data) {
         if (err) callback(err);
         else {
             // El usuario existe
             if (Object.entries(data).length > 0 && data.constructor === Object) {
                 let registeredProviders = data.Item.providers.SS;
-                let registeredProviderId = JSON.parse(data.Item.providerId.S);
+                let registeredProviderId = data.Item.providerId.M;
                 let registeredLastName = data.Item.lastName.S;
                 let registeredBirthdate = data.Item.birthdate.S;
                 let registeredGender = data.Item.gender.S;
@@ -69,14 +67,14 @@ exports.handler = (event, context, callback) => {
                     if (['Facebook', 'Google'].indexOf(provider) >= 0) {
                         // Actualizar proveedor
                         registeredProviders.push(provider);
-                        registeredProviderId[provider] = event.userName;
+                        registeredProviderId[provider] = JSON.parse(`{"S":"${event.userName}"}`);
                         registeredLastName = registeredLastName === ' ' ? lastName : registeredLastName;
                         registeredBirthdate = registeredBirthdate === ' ' ? birthdate : registeredBirthdate;
                         registeredGender = registeredGender === ' ' ? gender : registeredGender;
                         registeredPicture = registeredPicture === ' ' ? picture : registeredPicture;
 
-                        dql.updateUser(dynamodb, process.env.DB_ARV_USERS, hashKey, registeredProviders,
-                            JSON.stringify(registeredProviderId), verified, registeredLastName,
+                        dql.updateUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, registeredProviders,
+                            registeredProviderId, verified, registeredLastName,
                             registeredBirthdate, registeredGender, registeredPicture, function(err, data) {
                             if (err) callback(err);
                             else {
@@ -85,7 +83,7 @@ exports.handler = (event, context, callback) => {
 
                                 if (registeredProviders.indexOf('Cognito') < 0) {
                                     registeredUsername = provider === 'Facebook' ?
-                                        registeredProviderId['Google'] : registeredProviderId['Facebook'];
+                                        registeredProviderId.Google.S : registeredProviderId.Facebook.S;
                                 }
 
                                 let params = {
@@ -103,13 +101,12 @@ exports.handler = (event, context, callback) => {
                                 };
 
                                 if (process.env.RUN_MODE === 'LOCAL') callback(null, event);
-                                else {
+                                else
                                     // Se enlaza al usuario
                                     cognito.adminLinkProviderForUser(params, function(err, data) {
                                         if (err) callback(err);
                                         else callback(null, event);
                                     });
-                                }
                             }
                         });
                     }
@@ -134,13 +131,12 @@ exports.handler = (event, context, callback) => {
             }
 
             // No existe el usuario
-            else {
-                dql.addUser(dynamodb, process.env.DB_ARV_USERS, hashKey, registerDate, firstName, lastName,
+            else
+                dql.addUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, registerDate, firstName, lastName,
                     providers, providerId, verified, birthdate, gender, picture, function(err, data) {
                     if (err) callback(err);
                     else callback(null, event);
                 });
-            }
         }
     });
 };

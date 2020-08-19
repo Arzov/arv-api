@@ -1,0 +1,11 @@
+
+  LDFunctionARVGetUser:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: arv-get-user
+      CodeUri: lambda/functions/arv-get-user/
+      Role: !GetAtt IARoleARVLambda.Arn
+      Environment:
+        Variables:
+          RUN_MODE: SERVER
+          DB_ARV_001: !Ref DBTableARV_001

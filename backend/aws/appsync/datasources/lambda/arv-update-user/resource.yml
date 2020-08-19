@@ -1,0 +1,10 @@
+
+  ASDataSourceARVLDUpdateUser:
+    Type: AWS::AppSync::DataSource
+    Properties: 
+      ApiId: !GetAtt ASGraphQLApiARV.ApiId
+      LambdaConfig:
+        LambdaFunctionArn: !GetAtt LDFunctionARVUpdateUser.Arn
+      Name: LDUpdateUser
+      ServiceRoleArn: !GetAtt IARoleARVAppSync.Arn
+      Type: AWS_LAMBDA

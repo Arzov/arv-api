@@ -1,0 +1,11 @@
+
+  LDFunctionARVUpdateUser:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: arv-update-user
+      CodeUri: lambda/functions/arv-update-user/
+      Role: !GetAtt IARoleARVLambda.Arn
+      Environment:
+        Variables:
+          RUN_MODE: SERVER
+          DB_ARV_001: !Ref DBTableARV_001

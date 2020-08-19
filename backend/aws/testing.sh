@@ -29,7 +29,7 @@ docker run --name aws-arzov -d -p 8000:8000 \
 cd dynamodb/tables
 
 declare -A tables=(
-  [arv-users]=5
+  [arv-001]=5
 )
 
 for table in "${!tables[@]}"
@@ -72,6 +72,8 @@ cd lambda/functions
 lambdas="
     arv-auth-pre-signup
     arv-auth-post-confirmation
+    arv-get-user
+    arv-update-user
 "
 
 for lambda in $lambdas

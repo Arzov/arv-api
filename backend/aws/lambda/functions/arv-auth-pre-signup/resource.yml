@@ -14,4 +14,4 @@
       Environment:
         Variables:
           RUN_MODE: SERVER
-          DB_ARV_USERS: !Ref DBTableARVUsers
+          DB_ARV_001: !Ref DBTableARV_001
