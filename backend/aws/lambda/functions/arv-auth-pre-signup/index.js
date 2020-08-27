@@ -34,14 +34,14 @@ exports.handler = (event, context, callback) => {
     let picture = event.request.userAttributes.picture;
 
     // Verificar parametros nulos
-    firstName = firstName ? firstName : ' ';
-    lastName = lastName ? lastName : ' ';
-    birthdate = birthdate ? birthdate : ' ';
-    gender = gender ? gender : ' ';
-    picture = picture ? picture : ' ';
+    firstName = firstName ? firstName : '';
+    lastName = lastName ? lastName : '';
+    birthdate = birthdate ? birthdate : '';
+    gender = gender ? gender : '';
+    picture = picture ? picture : '';
 
     // Verificar imagen de Facebook
-    if (picture != ' ') {
+    if (picture) {
         picture = picture.substr(0, 5) === 'https' ? picture : JSON.parse(picture).data.url;
     }
 
@@ -68,10 +68,10 @@ exports.handler = (event, context, callback) => {
                         // Actualizar proveedor
                         registeredProviders.push(provider);
                         registeredProviderId[provider] = JSON.parse(`{"S":"${event.userName}"}`);
-                        registeredLastName = registeredLastName === ' ' ? lastName : registeredLastName;
-                        registeredBirthdate = registeredBirthdate === ' ' ? birthdate : registeredBirthdate;
-                        registeredGender = registeredGender === ' ' ? gender : registeredGender;
-                        registeredPicture = registeredPicture === ' ' ? picture : registeredPicture;
+                        registeredLastName = registeredLastName ? registeredLastName : lastName;
+                        registeredBirthdate = registeredBirthdate ? registeredBirthdate : birthdate;
+                        registeredGender = registeredGender ? registeredGender : gender;
+                        registeredPicture = registeredPicture ? registeredPicture : picture;
 
                         dql.updateUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, registeredProviders,
                             registeredProviderId, verified, registeredLastName,

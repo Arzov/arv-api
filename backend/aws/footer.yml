@@ -1,8 +1,8 @@
 Outputs:
-  DBTableARV_001Name:
-    Value: !Ref DBTableARV_001
+  DBTableARV001Name:
+    Value: !Ref DBTableARV001
     Export:
-      Name: ARV-DBTableARV_001Name
+      Name: ARV-DBTableARV001Name
   IARoleARVLambdaARN:
     Value: !GetAtt IARoleARVLambda.Arn
     Export:
