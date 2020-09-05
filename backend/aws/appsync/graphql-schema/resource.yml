@@ -24,9 +24,9 @@
           firstName: String
           lastName: String
           providerId: String!
-          providers: [String]!
+          providers: [String!]!
           registerDate: String!
-          verified: Int!
+          verified: Boolean!
           birthdate: String
           gender: String
           picture: String
