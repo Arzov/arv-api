@@ -10,7 +10,7 @@
  * @param {String} tableName Nombre de la tabla
  * @param {String} hashKey Email
  * @param {String} rangeKey Email
- * @param {Function} fn Función callback
+ * @param {Function} fn Funcion callback
  */
 const getUser = (db, tableName, hashKey, rangeKey, fn) => {
     db.getItem({
@@ -40,7 +40,7 @@ const getUser = (db, tableName, hashKey, rangeKey, fn) => {
  * @param {String} birthdate Fecha de nacimiento 'yyyy-mm-dd'
  * @param {String} gender Sexo
  * @param {String} picture URL de la imagen de perfil
- * @param {Function} fn Función callback
+ * @param {Function} fn Funcion callback
  */
 const addUser = (db, tableName, hashKey, rangeKey, registerDate, firstName, lastName, providers,
     providerId, verified, birthdate, gender, picture, fn) => {
@@ -78,7 +78,7 @@ const addUser = (db, tableName, hashKey, rangeKey, registerDate, firstName, last
  * @param {String} birthdate Fecha de nacimiento 'yyyy-mm-dd'
  * @param {String} gender Sexo
  * @param {String} picture URL de la imagen de perfil
- * @param {Function} fn Función callback
+ * @param {Function} fn Funcion callback
  */
 const updateUser = (db, tableName, hashKey, rangeKey, providers, providerId, verified,
     lastName, birthdate, gender, picture, fn) => {

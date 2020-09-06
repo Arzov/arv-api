@@ -1,5 +1,5 @@
 /**
- * Registrar usuario en AWS DynamoDB
+ * Registrar usuario
  * @author Franco Barrientos <franco.barrientos@arzov.com>
  */
 

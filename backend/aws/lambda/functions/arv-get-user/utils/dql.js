@@ -5,12 +5,12 @@
 
 
 /**
- * Obtiene información del usuario
+ * Obtiene informacion del usuario
  * @param {Object} db Conexion a DynamoDB
  * @param {String} tableName Nombre de la tabla
  * @param {String} hashKey Email
  * @param {String} rangeKey Email
- * @param {Function} fn Función callback
+ * @param {Function} fn Funcion callback
  */
 const getUser = (db, tableName, hashKey, rangeKey, fn) => {
     db.getItem({
@@ -23,7 +23,8 @@ const getUser = (db, tableName, hashKey, rangeKey, fn) => {
         if (err) return fn(err);
         else
             fn(null, {
-                hashKey: data.Item.hashKey.S.split("#")[1],
+                hashKey,
+                email: data.Item.hashKey.S.split("#")[1],
                 firstName: data.Item.firstName.S,
                 lastName: data.Item.lastName.S,
                 providerId: data.Item.providerId.M,

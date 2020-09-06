@@ -16,11 +16,12 @@
         }
 
         type Query {
-          getUser(hashKey: String!): User
+          getUser(email: String!): User
         }
 
         type User {
           hashKey: String!
+          email: String!
           firstName: String
           lastName: String
           providerId: String!

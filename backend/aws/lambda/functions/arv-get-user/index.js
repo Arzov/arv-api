@@ -19,10 +19,7 @@ const dynamodb = new aws.DynamoDB(options);
 
 
 exports.handler = (event, context, callback) => {
-    let hashKey = `USR#${event.hashKey}`;
+    let hashKey = `USR#${event.email}`;
 
-    dql.getUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, function(err, data) {
-        if (err) callback(err);
-        else callback(null, data);
-    });
+    dql.getUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, callback);
 };

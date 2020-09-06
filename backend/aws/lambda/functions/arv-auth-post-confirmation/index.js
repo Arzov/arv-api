@@ -1,5 +1,5 @@
 /**
- * Verificar usuario en AWS DynamoDB
+ * Verificar usuario
  * @author Franco Barrientos <franco.barrientos@arzov.com>
  */
 

@@ -5,7 +5,7 @@
 
 
 /**
- * Actualiza información del usuario
+ * Actualiza informacion del usuario
  * @param {Object} db Conexion a DynamoDB
  * @param {String} tableName Nombre de la tabla
  * @param {String} hashKey Email
@@ -15,7 +15,7 @@
  * @param {String} birthdate Fecha de nacimiento
  * @param {String} gender Sexo
  * @param {String} picture URL de la imagen de perfil
- * @param {Function} fn Función callback
+ * @param {Function} fn Funcion callback
  */
 const updateUser = (db, tableName, hashKey, rangeKey, firstName, lastName, birthdate,
     gender, picture, fn) => {
