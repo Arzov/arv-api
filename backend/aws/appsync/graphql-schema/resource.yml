@@ -6,7 +6,7 @@
       Definition: >
         type Mutation {
           updateUser(
-            hashKey: String!,
+            email: String!,
             firstName: String,
             lastName: String,
             picture: String,
@@ -20,7 +20,6 @@
         }
 
         type User {
-          hashKey: String!
           email: String!
           firstName: String
           lastName: String

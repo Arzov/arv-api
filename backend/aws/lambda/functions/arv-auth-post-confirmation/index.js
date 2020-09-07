@@ -5,6 +5,7 @@
 
 
 const aws = require('aws-sdk');
+const arvEnvs = require('arv-envs');
 const dql = require('utils/dql');
 let options = { apiVersion: '2012-08-10' }
 
@@ -20,7 +21,7 @@ const dynamodb = new aws.DynamoDB(options);
 
 exports.handler = (event, context, callback) => {
     let provider = event.userName.includes('@') ? 'Cognito' : event.userName.split('_')[0];
-    let hashKey = `USR#${event.request.userAttributes.email}`;
+    let hashKey = `${arvEnvs.pfx.USR}${event.request.userAttributes.email}`;
 
     if (provider === 'Cognito') {
         dql.updateUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, function(err, data) {

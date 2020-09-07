@@ -48,6 +48,14 @@ cd ../../
 #  Levantar servicio AWS Lambda
 # ----------------------------------------------------------
 
+# Instalar layers
+# cd lambda/layers
+
+# REMEMBER: Solo instalar paquetes externos con `npm install`
+# cd arv-exts/nodejs; npm install; cd ../../
+
+# cd ../../
+
 sam local start-lambda --docker-network arzov-local-network -t template.yml \
     --parameter-overrides "
         ParameterKey=AWSDefaultRegion,ParameterValue=$AWS_DEFAULT_REGION

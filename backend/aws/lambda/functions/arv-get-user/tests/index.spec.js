@@ -26,7 +26,6 @@ describe('Test AWS Lambda: arv-get-user', () => {
         let response = JSON.parse(data.Payload)
 
         expect(data.StatusCode).toBe(200)
-        expect(response.hashKey).toBe('USR#fjbarrientosg@gmail.com')
         expect(response.email).toBe('fjbarrientosg@gmail.com')
         expect(response.firstName).toBe('Franco')
         expect(response.lastName).toBe('Barrientos')

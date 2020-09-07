@@ -17,6 +17,14 @@ status=$?
 #  Build local para AWS Lambda
 # ----------------------------------------------------------
 
+# Instalar layers
+# cd lambda/layers
+
+# REMEMBER: Solo instalar paquetes externos con `npm install`
+# cd arv-exts/nodejs; npm install; cd ../../
+
+# cd ../../
+
 # AWS SAM build
 sam build -t template.yml \
     --parameter-overrides "

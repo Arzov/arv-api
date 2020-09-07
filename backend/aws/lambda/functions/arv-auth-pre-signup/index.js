@@ -5,6 +5,7 @@
 
 
 const aws = require('aws-sdk');
+const arvEnvs = require('arv-envs');
 const dql = require('utils/dql');
 const moment = require('moment');
 const cognito = new aws.CognitoIdentityServiceProvider();
@@ -22,7 +23,7 @@ const dynamodb = new aws.DynamoDB(options);
 
 exports.handler = (event, context, callback) => {
     let provider = event.userName.includes('@') ? 'Cognito' : event.userName.split('_')[0];
-    let hashKey = `USR#${event.request.userAttributes.email}`;
+    let hashKey = `${arvEnvs.pfx.USR}${event.request.userAttributes.email}`;
     let registerDate = moment().format();
     let firstName = event.request.userAttributes.name;
     let lastName = event.request.userAttributes.family_name;

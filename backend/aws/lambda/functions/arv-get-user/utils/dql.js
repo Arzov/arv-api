@@ -23,7 +23,6 @@ const getUser = (db, tableName, hashKey, rangeKey, fn) => {
         if (err) return fn(err);
         else
             fn(null, {
-                hashKey,
                 email: data.Item.hashKey.S.split("#")[1],
                 firstName: data.Item.firstName.S,
                 lastName: data.Item.lastName.S,

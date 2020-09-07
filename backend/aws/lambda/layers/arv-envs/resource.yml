@@ -1,0 +1,8 @@
+
+  LDLayerARVEnvs:
+    Type: AWS::Lambda::LayerVersion
+    Properties:
+      LayerName: arv-envs
+      Content: lambda/layers/arv-envs/
+      CompatibleRuntimes:
+        - nodejs12.x

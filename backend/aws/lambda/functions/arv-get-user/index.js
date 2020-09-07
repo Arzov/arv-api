@@ -5,6 +5,7 @@
 
 
 const aws = require('aws-sdk');
+const arvEnvs = require('arv-envs');
 const dql = require('utils/dql');
 let options = { apiVersion: '2012-08-10' }
 
@@ -19,7 +20,7 @@ const dynamodb = new aws.DynamoDB(options);
 
 
 exports.handler = (event, context, callback) => {
-    let hashKey = `USR#${event.email}`;
+    let hashKey = `${arvEnvs.pfx.USR}${event.email}`;
 
     dql.getUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, callback);
 };
