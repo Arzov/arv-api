@@ -1,20 +1,19 @@
 
   LDFunctionARVAuthPreSignup:
     Type: AWS::Serverless::Function
-    DependsOn: LDLayerARVEnvs
+    DependsOn:
+      - LDLayerARVEnvs
+      - LDLayerARVPkgs
     Properties:
       FunctionName: arv-auth-pre-signup
       CodeUri: lambda/functions/arv-auth-pre-signup/
       Role: !GetAtt IARoleARVLambda.Arn
       Layers:
         - !Ref LDLayerARVEnvs
+        - !Ref LDLayerARVPkgs
       Events:
         CognitoEvent:
           Type: Cognito
           Properties:
             Trigger: PreSignUp
             UserPool: !Ref CGUserPoolARV
-      Environment:
-        Variables:
-          RUN_MODE: SERVER
-          DB_ARV_001: !Ref DBTableARV001

@@ -5,23 +5,23 @@
 
 
 /**
- * Actualiza información del usuario
+ * Actualiza informacion del usuario
  * @param {Object} db Conexion a DynamoDB
  * @param {String} tableName Nombre de la tabla
  * @param {String} hashKey Email
  * @param {String} rangeKey Email
- * @param {Function} fn Función callback
+ * @param {Function} fn Funcion callback
  */
 const updateUser = (db, tableName, hashKey, rangeKey, fn) => {
     db.updateItem({
         TableName: tableName,
         Key: {
-            "hashKey": { S: hashKey },
-            "rangeKey": { S: rangeKey }
+            'hashKey': { S: hashKey },
+            'rangeKey': { S: rangeKey }
         },
-        UpdateExpression: "set verified = :v1",
+        UpdateExpression: 'set verified = :v1',
         ExpressionAttributeValues: {
-            ":v1": { BOOL: true }
+            ':v1': { BOOL: true }
         }
     },
     function(err, data) {

@@ -5,7 +5,7 @@
 
 
 /**
- * Obtiene información del usuario
+ * Obtiene informacion del usuario
  * @param {Object} db Conexion a DynamoDB
  * @param {String} tableName Nombre de la tabla
  * @param {String} hashKey Email
@@ -16,8 +16,8 @@ const getUser = (db, tableName, hashKey, rangeKey, fn) => {
     db.getItem({
         TableName: tableName,
         Key: {
-            "hashKey": { S: hashKey },
-            "rangeKey": { S: rangeKey }
+            'hashKey': { S: hashKey },
+            'rangeKey': { S: rangeKey }
         }
     }, function(err, data) {
         if (err) return fn(err);
@@ -47,17 +47,17 @@ const addUser = (db, tableName, hashKey, rangeKey, registerDate, firstName, last
     db.putItem({
         TableName: tableName,
         Item: {
-            "hashKey": { S: hashKey },
-            "rangeKey": { S: rangeKey },
-            "registerDate": { S: registerDate },
-            "firstName": { S: firstName },
-            "lastName": { S: lastName },
-            "providers": { SS: providers },
-            "providerId": { M: providerId },
-            "verified": { BOOL: verified },
-            "birthdate": { S: birthdate },
-            "gender": { S: gender },
-            "picture": { S: picture }
+            'hashKey': { S: hashKey },
+            'rangeKey': { S: rangeKey },
+            'registerDate': { S: registerDate },
+            'firstName': { S: firstName },
+            'lastName': { S: lastName },
+            'providers': { SS: providers },
+            'providerId': { M: providerId },
+            'verified': { BOOL: verified },
+            'birthdate': { S: birthdate },
+            'gender': { S: gender },
+            'picture': { S: picture }
         }
     }, function(err, data) {
         if (err) fn(err);
@@ -66,7 +66,7 @@ const addUser = (db, tableName, hashKey, rangeKey, registerDate, firstName, last
 }
 
 /**
- * Actualiza información del usuario
+ * Actualiza informacion del usuario
  * @param {Object} db Conexion a DynamoDB
  * @param {String} tableName Nombre de la tabla
  * @param {String} hashKey Email
@@ -85,19 +85,19 @@ const updateUser = (db, tableName, hashKey, rangeKey, providers, providerId, ver
     db.updateItem({
         TableName: tableName,
         Key: {
-            "hashKey": { S: hashKey },
-            "rangeKey": { S: rangeKey }
+            'hashKey': { S: hashKey },
+            'rangeKey': { S: rangeKey }
         },
-        UpdateExpression: "set providers = :v1, providerId = :v2, verified = :v3, lastName = :v4,\
-            birthdate = :v5, gender = :v6, picture = :v7",
+        UpdateExpression: 'set providers = :v1, providerId = :v2, verified = :v3, lastName = :v4,\
+            birthdate = :v5, gender = :v6, picture = :v7',
         ExpressionAttributeValues: {
-            ":v1": { SS: providers },
-            ":v2": { M: providerId },
-            ":v3": { BOOL: verified },
-            ":v4": { S: lastName },
-            ":v5": { S: birthdate },
-            ":v6": { S: gender },
-            ":v7": { S: picture }
+            ':v1': { SS: providers },
+            ':v2': { M: providerId },
+            ':v3': { BOOL: verified },
+            ':v4': { S: lastName },
+            ':v5': { S: birthdate },
+            ':v6': { S: gender },
+            ':v7': { S: picture }
         }
     },
     function(err, data) {

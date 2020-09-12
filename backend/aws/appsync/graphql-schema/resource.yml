@@ -7,11 +7,11 @@
         type Mutation {
           updateUser(
             email: String!,
-            firstName: String,
-            lastName: String,
-            picture: String,
-            birthdate: String,
-            gender: String
+            firstName: String!,
+            lastName: String!,
+            picture: String!,
+            birthdate: String!,
+            gender: String!
           ): User
         }
 

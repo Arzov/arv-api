@@ -1,20 +1,19 @@
 
   LDFunctionARVAuthPostConfirmation:
     Type: AWS::Serverless::Function
-    DependsOn: LDLayerARVEnvs
+    DependsOn:
+      - LDLayerARVEnvs
+      - LDLayerARVPkgs
     Properties:
       FunctionName: arv-auth-post-confirmation
       CodeUri: lambda/functions/arv-auth-post-confirmation/
       Role: !GetAtt IARoleARVLambda.Arn
       Layers:
         - !Ref LDLayerARVEnvs
+        - !Ref LDLayerARVPkgs
       Events:
         CognitoEvent:
           Type: Cognito
           Properties:
             Trigger: PostConfirmation
             UserPool: !Ref CGUserPoolARV
-      Environment:
-        Variables:
-          RUN_MODE: SERVER
-          DB_ARV_001: !Ref DBTableARV001
