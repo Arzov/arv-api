@@ -10,14 +10,9 @@ const dql = require('utils/dql');
 const arvUtils = require('arv-utils');
 const moment = require('moment');
 const cognito = new aws.CognitoIdentityServiceProvider();
-let options = { apiVersion: '2012-08-10' }
+let options = arvEnvs.gbl.DYNAMODB_CONFIG;
 
-if (process.env.RUN_MODE === 'LOCAL') {
-	options.endpoint = 'http://arzov:8000'
-	options.accessKeyId = 'xxxx'
-	options.secretAccessKey = 'xxxx'
-	options.region = 'localhost'
-}
+if (process.env.RUN_MODE === 'LOCAL') options = arvEnvs.dev.DYNAMODB_CONFIG;
 
 const dynamodb = new aws.DynamoDB(options);
 

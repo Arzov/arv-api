@@ -1,20 +1,13 @@
 const aws = require('aws-sdk')
+const arvEnvs = require('../../../layers/arv-envs/nodejs/node_modules/arv-envs')
 const event01 = require('../events/event01.json')
 const event02 = require('../events/event02.json')
 const event03 = require('../events/event03.json')
 
 describe('Test AWS Lambda: arv-auth-post-confirmation', () => {
 
-  let lambda = new aws.Lambda({
-    apiVersion: '2015-03-31',
-    region: 'us-east-1',
-    endpoint: 'http://127.0.0.1:3001',
-    sslEnabled: false
-  })
-
-  let params = {
-    FunctionName: 'arv-auth-post-confirmation'
-  }
+  let lambda = new aws.Lambda(arvEnvs.dev.LAMBDA_CONFIG)
+  let params = {FunctionName: 'arv-auth-post-confirmation'}
 
   test('Respuesta desde AWS: Usuario Google (fjbarrientosg@gmail.com)', (done) => {
 
