@@ -5,5 +5,4 @@
       DomainName: arzov.com
       SubjectAlternativeNames:
         - "*.arzov.com"
-        - "*.umatch.arzov.com"
       ValidationMethod: EMAIL
