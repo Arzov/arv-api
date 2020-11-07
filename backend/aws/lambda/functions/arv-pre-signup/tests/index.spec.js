@@ -5,10 +5,10 @@ const event02 = require('../events/event02.json')
 const event03 = require('../events/event03.json')
 const event04 = require('../events/event04.json')
 
-describe('Test AWS Lambda: arv-auth-pre-signup', () => {
+describe('Test AWS Lambda: arv-pre-signup', () => {
 
   let lambda = new aws.Lambda(arvEnvs.dev.LAMBDA_CONFIG)
-  let params = {FunctionName: 'arv-auth-pre-signup'}
+  let params = {FunctionName: 'arv-pre-signup'}
 
   test('Respuesta desde AWS: Usuario Google (fjbarrientosg@gmail.com)', (done) => {
 

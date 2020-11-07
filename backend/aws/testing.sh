@@ -78,8 +78,8 @@ status=$((status + $?))
 cd lambda/functions
 
 lambdas="
-    arv-auth-pre-signup
-    arv-auth-post-confirmation
+    arv-pre-signup
+    arv-post-confirmation
     arv-get-user
     arv-update-user
 "

@@ -4,10 +4,10 @@ const event01 = require('../events/event01.json')
 const event02 = require('../events/event02.json')
 const event03 = require('../events/event03.json')
 
-describe('Test AWS Lambda: arv-auth-post-confirmation', () => {
+describe('Test AWS Lambda: arv-post-confirmation', () => {
 
   let lambda = new aws.Lambda(arvEnvs.dev.LAMBDA_CONFIG)
-  let params = {FunctionName: 'arv-auth-post-confirmation'}
+  let params = {FunctionName: 'arv-post-confirmation'}
 
   test('Respuesta desde AWS: Usuario Google (fjbarrientosg@gmail.com)', (done) => {
 

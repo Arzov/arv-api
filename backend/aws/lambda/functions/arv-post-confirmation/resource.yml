@@ -1,12 +1,12 @@
 
-  LDFunctionARVAuthPostConfirmation:
+  LDFunctionARVPostConfirmation:
     Type: AWS::Serverless::Function
     DependsOn:
       - LDLayerARVEnvs
       - LDLayerARVPkgs
     Properties:
-      FunctionName: arv-auth-post-confirmation
-      CodeUri: lambda/functions/arv-auth-post-confirmation/
+      FunctionName: arv-post-confirmation
+      CodeUri: lambda/functions/arv-post-confirmation/
       Role: !GetAtt IARoleARVLambda.Arn
       Layers:
         - !Ref LDLayerARVEnvs

@@ -1,5 +1,5 @@
 {
-  "name": "arv-auth-post-confirmation",
+  "name": "arv-pre-signup",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -12,8 +12,11 @@
   ],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "moment": "^2.26.0"
+  },
   "devDependencies": {
-    "aws-sdk": "^2.686.0",
+    "aws-sdk": "^2.741.0",
     "jest": "^26.0.1"
   }
 }
