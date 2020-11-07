@@ -7,6 +7,7 @@
 const aws = require('aws-sdk');
 const arvEnvs = require('arv-envs');
 const dql = require('utils/dql');
+const fns = require('utils/fns');
 const arvUtils = require('arv-utils');
 const moment = require('moment');
 const cognito = new aws.CognitoIdentityServiceProvider();
@@ -75,35 +76,43 @@ exports.handler = (event, context, callback) => {
                             registeredBirthdate, registeredGender, registeredPicture, function(err, data) {
                             if (err) callback(err);
                             else {
-                                // Enlazar cuentas
-                                let registeredUsername = hashKey;
+                                if (process.env.RUN_MODE === 'LOCAL') callback(null, event);
 
+                                // Enlazar cuentas
+                                let registeredUsername = event.request.userAttributes.email;
+
+                                // Si el usuario no esta registrado con Cognito
+                                // entonces se debe buscar el id de la red social
+                                // correspondiente
                                 if (registeredProviders.indexOf('Cognito') < 0) {
                                     registeredUsername = provider === 'Facebook' ?
                                         registeredProviderId.Google.S : registeredProviderId.Facebook.S;
                                 }
 
                                 let params = {
-                                    DestinationUser: {
-                                        ProviderAttributeName: '',
-                                        ProviderAttributeValue: registeredUsername,
-                                        ProviderName: 'Cognito'
-                                    },
-                                    SourceUser: {
-                                        ProviderAttributeName: 'Cognito_Subject',
-                                        ProviderAttributeValue: event.userName,
-                                        ProviderName: provider
-                                    },
+                                    Username: registeredUsername,
                                     UserPoolId: event.userPoolId
-                                };
+                                }
 
-                                if (process.env.RUN_MODE === 'LOCAL') callback(null, event);
-                                else
-                                    // Se enlaza al usuario
-                                    cognito.adminLinkProviderForUser(params, function(err, data) {
-                                        if (err) callback(err);
-                                        else callback(null, event);
-                                    });
+                                // Revisar primero si el usuario esta verificado
+                                cognito.adminGetUser(params, function(err, data) {
+                                    if (err) callback(err);
+                                    else {
+                                        // Si no esta verificado entonces verificar
+                                        // ya que el usuario esta entrando con una
+                                        // red social y eso lo verifica
+                                        if (data.UserStatus === 'UNCONFIRMED') {
+                                            cognito.adminConfirmSignUp(params, function(err, data) {
+                                                if (err) callback(err);
+                                                else
+                                                    fns.linkUser(cognito, registeredUsername, provider,
+                                                        event, callback);
+                                            });
+                                        } else 
+                                            fns.linkUser(cognito, registeredUsername, provider,
+                                                event, callback);
+                                    };
+                                });
                             }
                         });
                     }
