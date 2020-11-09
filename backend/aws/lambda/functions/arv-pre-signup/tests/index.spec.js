@@ -70,7 +70,7 @@ describe('Test AWS Lambda: arv-pre-signup', () => {
         let response = JSON.parse(data.Payload)
 
         expect(data.StatusCode).toBe(200)
-        expect(response.errorMessage).toBe('#¡El email ya se ha registrado con Facebook y Google!#')
+        expect(response.errorMessage).toBe('#El correo ya se ha registrado con Facebook y Google.#')
         expect(response.errorType).toBe('Error')
       }
 

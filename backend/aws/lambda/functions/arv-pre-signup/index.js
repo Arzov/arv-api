@@ -121,15 +121,15 @@ exports.handler = (event, context, callback) => {
                     else {
                         // Se usa # para poder parsear mensaje en frontend
                         if (registeredProviders.length > 1) {
-                            let err = new Error("#¡El email ya se ha registrado con Facebook y Google!#");
+                            let err = new Error("#El correo ya se ha registrado con Facebook y Google.#");
                             callback(err, event);
                         }
                         else if (registeredProviders.indexOf('Facebook') >= 0) {
-                            let err = new Error("#¡El email ya se ha registrado con Facebook!#");
+                            let err = new Error("#El correo ya se ha registrado con Facebook.#");
                             callback(err, event);
                         }
                         else {
-                            let err = new Error("#¡El email ya se ha registrado con Google!#");
+                            let err = new Error("#El correo ya se ha registrado con Google.#");
                             callback(err, event);
                         }
                     }
