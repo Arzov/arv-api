@@ -17,9 +17,11 @@
         - profile
         - aws.cognito.signin.user.admin
       CallbackURLs:
+        - exp://127.0.0.1:19000
         - http://localhost:3000
         - !Sub https://${AWSR53UMTDomain}
       LogoutURLs:
+        - exp://127.0.0.1:19000
         - http://localhost:3000
         - !Sub https://${AWSR53UMTDomain}
       SupportedIdentityProviders:
