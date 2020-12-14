@@ -104,9 +104,20 @@ exports.handler = (event, context, callback) => {
                                         if (data.UserStatus === 'UNCONFIRMED') {
                                             cognito.adminConfirmSignUp(params, function(err, data) {
                                                 if (err) callback(err);
-                                                else
-                                                    fns.linkUser(cognito, registeredUsername, provider,
-                                                        event, callback);
+                                                else {
+                                                    params.UserAttributes = [{
+                                                        Name: 'email_verified',
+                                                        Value: 'true'
+                                                    }]
+                                                    
+                                                    // Verificar email
+                                                    cognito.adminUpdateUserAttributes(params, function(err, data) {
+                                                        if (err) callback(err);
+                                                        else
+                                                            fns.linkUser(cognito, registeredUsername, provider,
+                                                                event, callback);
+                                                    });
+                                                }
                                             });
                                         } else 
                                             fns.linkUser(cognito, registeredUsername, provider,
