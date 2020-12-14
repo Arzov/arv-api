@@ -36,7 +36,14 @@ const updateUser = (db, tableName, hashKey, rangeKey, firstName, lastName, birth
         }
     }, function(err, data) {
         if (err) fn(err);
-        else fn(null, data);
+        else fn(null, {
+            email: hashKey.split('#')[1],
+            firstName,
+            lastName,
+            birthdate,
+            gender,
+            picture
+        });
     });
 }
 
