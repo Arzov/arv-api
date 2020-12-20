@@ -4,3 +4,9 @@ _site
 .jekyll-metadata
 vendor
 node_modules
+
+# uxi
+_uxi
+
+# aws
+backend/aws
