@@ -22,6 +22,9 @@ describe('Test AWS Lambda: arv-get-user', () => {
         expect(response.email).toBe('fjbarrientosg@gmail.com')
         expect(response.firstName).toBe('Franco')
         expect(response.lastName).toBe('Barrientos')
+        expect(response.gender).toBe('')
+        expect(response.verified).toBe(true)
+        expect(response.birthdate).toBe('')
         expect(response.providerId).toStrictEqual({ Google: { S: 'Google_115619098971084199595' },
           Facebook:{ S: 'Facebook_10217846363663521' } })
       }

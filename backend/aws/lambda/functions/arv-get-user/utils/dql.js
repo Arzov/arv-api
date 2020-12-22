@@ -31,8 +31,8 @@ const getUser = (db, tableName, hashKey, rangeKey, fn) => {
                 registerDate: data.Item.registerDate.S,
                 verified: data.Item.verified.BOOL,
                 birthdate: data.Item.birthdate.S,
-                gender: data.Item.birthdate.S,
-                picture: data.Item.birthdate.S
+                gender: data.Item.gender.S,
+                picture: data.Item.picture.S
             });
     });
 }
