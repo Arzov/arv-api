@@ -20,13 +20,13 @@
         }
 
         type User {
-          email: String!
+          email: String
           firstName: String
           lastName: String
-          providerId: String!
-          providers: [String!]!
-          registerDate: String!
-          verified: Boolean!
+          providerId: String
+          providers: [String]
+          registerDate: String
+          verified: Boolean
           birthdate: String
           gender: String
           picture: String
