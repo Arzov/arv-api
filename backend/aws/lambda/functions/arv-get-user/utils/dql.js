@@ -26,7 +26,7 @@ const getUser = (db, tableName, hashKey, rangeKey, fn) => {
                 email: data.Item.hashKey.S.split('#')[1],
                 firstName: data.Item.firstName.S,
                 lastName: data.Item.lastName.S,
-                providerId: data.Item.providerId.M,
+                providerId: JSON.stringify(data.Item.providerId.M),
                 providers: data.Item.providers.SS,
                 registerDate: data.Item.registerDate.S,
                 verified: data.Item.verified.BOOL,
