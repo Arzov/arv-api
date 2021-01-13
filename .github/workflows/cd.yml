@@ -65,6 +65,5 @@ jobs:
 
       - name: Deploy para AWS
         run: |
-          cd backend/aws
           chmod +x deploy.sh
           ./deploy.sh

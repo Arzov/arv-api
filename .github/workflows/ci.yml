@@ -67,6 +67,5 @@ jobs:
 
       - name: Pruebas AWS Lambda
         run: |
-          cd backend/aws
           chmod +x testing.sh
           ./testing.sh
