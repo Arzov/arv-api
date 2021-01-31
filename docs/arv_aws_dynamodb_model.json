@@ -5,7 +5,8 @@
     "DateCreated": "Aug 20, 2020, 10:09 AM",
     "DateLastModified": "Sep 05, 2020, 02:03 PM",
     "Description": "Modelo de datos para API de Arzov.",
-    "Version": "1.0"
+    "Version": "2.0",
+    "AWSService": "Amazon DynamoDB"
   },
   "DataModel": [
     {

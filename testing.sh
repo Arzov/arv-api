@@ -4,6 +4,12 @@
 # Author : Franco Barrientos <franco.barrientos@arzov.com>
 # ==========================================================
 
+sam="sam"
+
+if [[ $ENV_SO == "windows" ]]
+then
+    sam="sam.cmd"
+fi
 
 # ----------------------------------------------------------
 #  Generar template.yml
@@ -48,25 +54,18 @@ cd ../../
 #  Levantar servicio AWS Lambda
 # ----------------------------------------------------------
 
-# Instalar layers
-# cd lambda/layers
-
-# REMEMBER: Solo instalar paquetes externos con `npm install`
-# cd arv-exts/nodejs; npm install; cd ../../
-
-# cd ../../
-
-sam local start-lambda --docker-network arzov-local-network -t template.yml \
-    --parameter-overrides "
-        ParameterKey=AWSDefaultRegion,ParameterValue=$AWS_DEFAULT_REGION
-        ParameterKey=FacebookAppId,ParameterValue=$FACEBOOK_APP_ID
-        ParameterKey=FacebookAppSecret,ParameterValue=$FACEBOOK_APP_SECRET
-        ParameterKey=GoogleAppId,ParameterValue=$GOOGLE_APP_ID
-        ParameterKey=GoogleAppSecret,ParameterValue=$GOOGLE_APP_SECRET
-        ParameterKey=AWSCognitoAuthDomain,ParameterValue=$AWS_COGNITO_AUTH_DOMAIN
-        ParameterKey=AWSR53UMTDomain,ParameterValue=$AWS_R53_UMT_DOMAIN
-        ParameterKey=AWSS3AssetsBucket,ParameterValue=$AWS_S3_ASSETS_BUCKET
-    " \
+params="
+    ParameterKey=AWSDefaultRegion,ParameterValue=$AWS_DEFAULT_REGION
+    ParameterKey=FacebookAppId,ParameterValue=$FACEBOOK_APP_ID
+    ParameterKey=FacebookAppSecret,ParameterValue=$FACEBOOK_APP_SECRET
+    ParameterKey=GoogleAppId,ParameterValue=$GOOGLE_APP_ID
+    ParameterKey=GoogleAppSecret,ParameterValue=$GOOGLE_APP_SECRET
+    ParameterKey=AWSCognitoAuthDomain,ParameterValue=$AWS_COGNITO_AUTH_DOMAIN
+    ParameterKey=AWSR53UMTDomain,ParameterValue=$AWS_R53_UMT_DOMAIN
+    ParameterKey=AWSS3AssetsBucket,ParameterValue=$AWS_S3_ASSETS_BUCKET
+" 
+$sam local start-lambda --docker-network arzov-local-network -t template.yml \
+    --parameter-overrides $params \
     --env-vars lambda/functions/env.json & pids="${pids-} $!"
 status=$((status + $?))
 
