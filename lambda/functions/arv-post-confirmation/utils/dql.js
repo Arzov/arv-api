@@ -16,8 +16,8 @@ const updateUser = (db, tableName, hashKey, rangeKey, fn) => {
     db.updateItem({
         TableName: tableName,
         Key: {
-            'hashKey': { S: hashKey },
-            'rangeKey': { S: rangeKey }
+            hashKey: { S: hashKey },
+            rangeKey: { S: rangeKey }
         },
         UpdateExpression: 'set verified = :v1',
         ExpressionAttributeValues: {

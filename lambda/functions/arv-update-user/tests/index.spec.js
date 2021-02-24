@@ -1,6 +1,6 @@
 const aws = require('aws-sdk')
 const arvEnvs = require('../../../layers/arv-envs/nodejs/node_modules/arv-envs')
-const event = require('../events/event.json')
+const events = require('../events/events.json')
 
 describe('Test AWS Lambda: arv-update-user', () => {
 
@@ -9,7 +9,7 @@ describe('Test AWS Lambda: arv-update-user', () => {
 
   test('Respuesta desde AWS: Usuario fjbarrientosg@gmail.com', (done) => {
 
-    params.Payload = JSON.stringify(event)
+    params.Payload = JSON.stringify(events[0])
 
     lambda.invoke(params, function(err, data) {
       if (err) {

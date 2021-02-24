@@ -1,9 +1,6 @@
 const aws = require('aws-sdk')
 const arvEnvs = require('../../../layers/arv-envs/nodejs/node_modules/arv-envs')
-const event01 = require('../events/event01.json')
-const event02 = require('../events/event02.json')
-const event03 = require('../events/event03.json')
-const event04 = require('../events/event04.json')
+const events = require('../events/events.json')
 
 describe('Test AWS Lambda: arv-pre-signup', () => {
 
@@ -12,7 +9,7 @@ describe('Test AWS Lambda: arv-pre-signup', () => {
 
   test('Respuesta desde AWS: Usuario Google (fjbarrientosg@gmail.com)', (done) => {
 
-    params.Payload = JSON.stringify(event01)
+    params.Payload = JSON.stringify(events[0])
 
     lambda.invoke(params, function(err, data) {
       if (err) {
@@ -36,7 +33,7 @@ describe('Test AWS Lambda: arv-pre-signup', () => {
 
   test('Respuesta desde AWS: Usuario Facebook (fjbarrientosg@gmail.com)', (done) => {
 
-    params.Payload = JSON.stringify(event02)
+    params.Payload = JSON.stringify(events[1])
 
     lambda.invoke(params, function(err, data) {
       if (err) {
@@ -60,7 +57,7 @@ describe('Test AWS Lambda: arv-pre-signup', () => {
 
   test('Respuesta desde AWS: Usuario Cognito (fjbarrientosg@gmail.com)', (done) => {
 
-    params.Payload = JSON.stringify(event03)
+    params.Payload = JSON.stringify(events[2])
 
     lambda.invoke(params, function(err, data) {
       if (err) {
@@ -80,7 +77,7 @@ describe('Test AWS Lambda: arv-pre-signup', () => {
 
   test('Respuesta desde AWS: Usuario Cognito (franco.barrientos@arzov.com)', (done) => {
 
-    params.Payload = JSON.stringify(event04)
+    params.Payload = JSON.stringify(events[3])
 
     lambda.invoke(params, function(err, data) {
       if (err) {
