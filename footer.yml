@@ -1,0 +1,41 @@
+Outputs:
+  DBTableARV001Name:
+    Value: !Ref DBTableARV001
+    Export:
+      Name: ARV-DBTableARV001Name
+  IARoleARVLambdaARN:
+    Value: !GetAtt IARoleARVLambda.Arn
+    Export:
+      Name: ARV-IARoleARVLambdaARN
+  IARoleARVAppSyncARN:
+    Value: !GetAtt IARoleARVAppSync.Arn
+    Export:
+      Name: ARV-IARoleARVAppSyncARN
+  CGUserPoolARVId:
+    Value: !Ref CGUserPoolARV
+    Export:
+      Name: ARV-CGUserPoolARVId
+  CGUserPoolClientARVId:
+    Value: !Ref CGUserPoolClientARV
+    Export:
+      Name: ARV-CGUserPoolClientARVId
+  CGUserPoolDomainARVId:
+    Value: !Ref CGUserPoolDomainARV
+    Export:
+      Name: ARV-CGUserPoolDomainARVId
+  ASGraphQLApiARVUrl:
+    Value: !GetAtt ASGraphQLApiARV.GraphQLUrl
+    Export:
+      Name: ARV-ASGraphQLApiARVUrl
+  CMCertificateARVARN:
+    Value: !Ref CMCertificateARV
+    Export:
+      Name: ARV-CMCertificateARVARN
+  S3BucketARVAssetsId:
+    Value: !Ref S3BucketARVAssets
+    Export:
+      Name: ARV-S3BucketARVAssetsId
+  CGIdentityPoolARVId:
+    Value: !Ref CGIdentityPoolARV
+    Export:
+      Name: ARV-CGIdentityPoolARVId

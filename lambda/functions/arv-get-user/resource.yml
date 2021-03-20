@@ -1,0 +1,10 @@
+
+  LDFunctionARVGetUser:
+    Type: AWS::Serverless::Function
+    DependsOn: LDLayerARVEnvs
+    Properties:
+      FunctionName: arv-get-user
+      CodeUri: !Join [ "/", [ !Ref HostRoot, "lambda/functions/arv-get-user/" ] ]
+      Role: !GetAtt IARoleARVLambda.Arn
+      Layers:
+        - !Ref LDLayerARVEnvs

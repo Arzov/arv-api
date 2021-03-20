@@ -1,0 +1,172 @@
+{
+  "ModelName": "arv-api",
+  "ModelMetadata": {
+    "Author": "Franco Barrientos",
+    "DateCreated": "Aug 20, 2020, 10:09 AM",
+    "DateLastModified": "Sep 05, 2020, 02:03 PM",
+    "Description": "Modelo de datos para API de Arzov.",
+    "Version": "2.0",
+    "AWSService": "Amazon DynamoDB"
+  },
+  "DataModel": [
+    {
+      "TableName": "ARV_001",
+      "KeyAttributes": {
+        "PartitionKey": {
+          "AttributeName": "hashKey",
+          "AttributeType": "S"
+        },
+        "SortKey": {
+          "AttributeName": "rangeKey",
+          "AttributeType": "S"
+        }
+      },
+      "NonKeyAttributes": [
+        {
+          "AttributeName": "firstName",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "lastName",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "registerDate",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "providers",
+          "AttributeType": "SS"
+        },
+        {
+          "AttributeName": "providerId",
+          "AttributeType": "M"
+        },
+        {
+          "AttributeName": "verified",
+          "AttributeType": "BOOL"
+        },
+        {
+          "AttributeName": "birthdate",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "gender",
+          "AttributeType": "S"
+        },
+        {
+          "AttributeName": "picture",
+          "AttributeType": "S"
+        }
+      ],
+      "TableFacets": [
+        {
+          "FacetName": "Users",
+          "KeyAttributeAlias": {
+            "PartitionKeyAlias": "hashKey",
+            "SortKeyAlias": "rangeKey"
+          },
+          "TableData": [
+            {
+              "hashKey": {
+                "S": "USR#fjbarrientosg@gmail.com"
+              },
+              "rangeKey": {
+                "S": "USR#fjbarrientosg@gmail.com"
+              },
+              "firstName": {
+                "S": "Franco"
+              },
+              "lastName": {
+                "S": "Barrientos"
+              },
+              "registerDate": {
+                "S": "2020-06-17T21:27:51+00:00"
+              },
+              "providers": {
+                "SS": [
+                  "Facebook",
+                  "Google"
+                ]
+              },
+              "providerId": {
+                "M": {
+                  "Google": {
+                    "S": "Google_115619098971084199595"
+                  },
+                  "Facebook": {
+                    "S": "Facebook_10217846363663521"
+                  }
+                }
+              },
+              "verified": {
+                "BOOL": true
+              },
+              "birthdate": {
+                "S": "1989-05-15"
+              },
+              "gender": {
+                "S": "M"
+              },
+              "picture": {
+                "S": "https://lh3.googleusercontent.com/a-/AOh14GgWjEj2cnH3clfJHqQiMnQ7yqFiZ3ImefchqcWxPQ=s96-c"
+              }
+            },
+            {
+              "hashKey": {
+                "S": "USR#jesus.barrientos@arzov.com"
+              },
+              "rangeKey": {
+                "S": "USR#jesus.barrientos@arzov.com"
+              },
+              "firstName": {
+                "S": "Jesús"
+              },
+              "registerDate": {
+                "S": "2020-06-17T21:27:51+00:00"
+              },
+              "providers": {
+                "SS": [
+                  "Cognito"
+                ]
+              },
+              "providerId": {
+                "M": {
+                  "Cognito": {
+                    "S": "jesus.barrientos@arzov.com"
+                  }
+                }
+              },
+              "verified": {
+                "BOOL": true
+              },
+              "birthdate": {
+                "S": "1995-04-04"
+              },
+              "gender": {
+                "S": "M"
+              }
+            }
+          ],
+          "NonKeyAttributes": [
+            "firstName",
+            "lastName",
+            "registerDate",
+            "providers",
+            "providerId",
+            "verified",
+            "birthdate",
+            "gender",
+            "picture"
+          ],
+          "DataAccess": {
+            "MySql": {}
+          }
+        }
+      ],
+      "DataAccess": {
+        "MySql": {}
+      }
+    }
+  ]
+}

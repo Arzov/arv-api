@@ -1,0 +1,7 @@
+
+  CGIdentityPoolRoleAttachmentARV:
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    Properties: 
+      IdentityPoolId: !Ref CGIdentityPoolARV
+      Roles:
+        authenticated: !GetAtt IARoleARVCognito.Arn

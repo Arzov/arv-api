@@ -1,0 +1,42 @@
+
+  ASGraphQLSchemaARV:
+    Type: AWS::AppSync::GraphQLSchema
+    Properties: 
+      ApiId: !GetAtt ASGraphQLApiARV.ApiId
+      Definition: >
+        type Mutation {
+          updateUser(
+            email: String!,
+            firstName: String!,
+            lastName: String!,
+            providerId: String!,
+            providers: [String]!,
+            registerDate: String!,
+            verified: Boolean!,
+            birthdate: String!,
+            gender: String!,
+            picture: String!
+          ): User
+        }
+
+        type Query {
+          getUser(email: String!): User
+        }
+
+        type User {
+          email: String
+          firstName: String
+          lastName: String
+          providerId: String
+          providers: [String]
+          registerDate: String
+          verified: Boolean
+          birthdate: String
+          gender: String
+          picture: String
+        }
+
+        schema {
+          query: Query
+          mutation: Mutation
+        }

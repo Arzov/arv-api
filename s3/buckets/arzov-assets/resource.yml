@@ -1,0 +1,21 @@
+
+  S3BucketARVAssets:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref AWSS3AssetsBucket
+      AccessControl: Private
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins:
+              - '*'
+            AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - GET
+              - PUT
+            MaxAge: 3000
+            ExposedHeaders:
+              - x-amz-server-side-encryption
+              - x-amz-request-id
+              - x-amz-id-2
+              - ETag

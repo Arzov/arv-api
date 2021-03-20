@@ -1,5 +1,14 @@
+# backend AWS
+**/node_modules/*
 node_modules
 .vscode
-**/layers/**/nodejs
-**/layers/**/*.zip
-docs
+*.~vsdx
+
+# jekyll
+_site
+.jekyll-cache
+
+# whitelist
+!lambda/layers/**/nodejs/.gitkeep
+!**/node_modules/arv-envs
+!**/node_modules/arv-utils

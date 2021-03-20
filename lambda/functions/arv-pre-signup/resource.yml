@@ -1,0 +1,19 @@
+
+  LDFunctionARVPreSignup:
+    Type: AWS::Serverless::Function
+    DependsOn:
+      - LDLayerARVEnvs
+      - LDLayerARVPkgs
+    Properties:
+      FunctionName: arv-pre-signup
+      CodeUri: !Join [ "/", [ !Ref HostRoot, "lambda/functions/arv-pre-signup/" ] ]
+      Role: !GetAtt IARoleARVLambda.Arn
+      Layers:
+        - !Ref LDLayerARVEnvs
+        - !Ref LDLayerARVPkgs
+      Events:
+        CognitoEvent:
+          Type: Cognito
+          Properties:
+            Trigger: PreSignUp
+            UserPool: !Ref CGUserPoolARV

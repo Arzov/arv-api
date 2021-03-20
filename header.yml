@@ -1,0 +1,34 @@
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Backend en AWS
+
+Globals:
+  Function:
+    MemorySize: 256
+    Timeout: 180
+    Handler: index.handler
+    Runtime: nodejs12.x
+    Environment:
+      Variables:
+        RUN_MODE: SERVER
+        DB_ARV_001: !Ref DBTableARV001
+
+Parameters: 
+  AWSDefaultRegion: 
+    Type: String
+  FacebookAppId: 
+    Type: String
+  FacebookAppSecret: 
+    Type: String
+  GoogleAppId: 
+    Type: String
+  GoogleAppSecret: 
+    Type: String
+  AWSCognitoAuthDomain: 
+    Type: String
+  AWSR53UMTDomain: 
+    Type: String
+  AWSS3AssetsBucket: 
+    Type: String
+
+Resources:

@@ -1,0 +1,8 @@
+
+  LDLayerARVPkgs:
+    Type: AWS::Lambda::LayerVersion
+    Properties:
+      LayerName: arv-pkgs
+      Content: lambda/layers/arv-pkgs/
+      CompatibleRuntimes:
+        - nodejs12.x
