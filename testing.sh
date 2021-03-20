@@ -1,41 +1,47 @@
 #!/bin/bash
 # ==========================================================
-# Testing backend en AWS
-# Author : Franco Barrientos <franco.barrientos@arzov.com>
+# Run tests locally for AWS
+# @author : Franco Barrientos <franco.barrientos@arzov.com>
 # ==========================================================
+set -o errexit
 
-sam="sam"
-
-if [[ $ENV_SO == "windows" ]]
-then
-    sam="sam.cmd"
-fi
 
 # ----------------------------------------------------------
-#  Generar template.yml
+#  Parameters
+# ----------------------------------------------------------
+
+DYNAMODB_SERVICE_IP=172.17.0.1
+DYNAMODB_PORT=8000
+DYNAMODB_TEMPLATE_START_LINE=5
+DYNAMODB_CONN_TIMEOUT=60000
+
+LAMBDA_SERVICE_IP=0.0.0.0
+
+
+# ----------------------------------------------------------
+#  Create template.yml
 # ----------------------------------------------------------
 
 chmod +x samtemplate.sh; ./samtemplate.sh
-status=$?
 
 
 # ----------------------------------------------------------
-#  Levantar servicio AWS DynamoDB
+#  Start AWS DynamoDB service
 # ----------------------------------------------------------
 
-docker network create arzov-local-network
-docker run --name aws-arzov -d -p 8000:8000 \
-    --network arzov-local-network \
-    --network-alias arzov \
+docker run \
+    --name arzov-dynamodb \
+    -p $DYNAMODB_PORT:$DYNAMODB_PORT \
+    -d \
     amazon/dynamodb-local \
     -jar DynamoDBLocal.jar \
     -inMemory -sharedDb
 
-# Crear tablas
+# Create tables
 cd dynamodb/tables
 
 declare -A tables=(
-  [arv-001]=5
+  [arv-001]=$DYNAMODB_TEMPLATE_START_LINE
 )
 
 for table in "${!tables[@]}"
@@ -43,7 +49,11 @@ do
     ln="${tables[$table]}"
     cd $table
     awk "NR >= ${ln}" resource.yml > tmp.yml
-    aws dynamodb create-table --cli-input-yaml file://tmp.yml --endpoint-url http://localhost:8000 --region localhost > null.log
+    aws dynamodb create-table \
+        --cli-input-yaml file://tmp.yml \
+        --endpoint-url http://$DYNAMODB_SERVICE_IP:$DYNAMODB_PORT \
+        --cli-connect-timeout $DYNAMODB_CONN_TIMEOUT \
+        > null.log
     rm tmp.yml; rm null.log; cd ../
 done
 
@@ -51,10 +61,11 @@ cd ../../
 
 
 # ----------------------------------------------------------
-#  Levantar servicio AWS Lambda
+#  Start AWS Lambda service
 # ----------------------------------------------------------
 
 params="
+    ParameterKey=HostRoot,ParameterValue=$HOST_ROOT
     ParameterKey=AWSDefaultRegion,ParameterValue=$AWS_DEFAULT_REGION
     ParameterKey=FacebookAppId,ParameterValue=$FACEBOOK_APP_ID
     ParameterKey=FacebookAppSecret,ParameterValue=$FACEBOOK_APP_SECRET
@@ -64,14 +75,15 @@ params="
     ParameterKey=AWSR53UMTDomain,ParameterValue=$AWS_R53_UMT_DOMAIN
     ParameterKey=AWSS3AssetsBucket,ParameterValue=$AWS_S3_ASSETS_BUCKET
 " 
-$sam local start-lambda --docker-network arzov-local-network -t template.yml \
+sam local start-lambda \
+    -t template.yml \
+    --host $LAMBDA_SERVICE_IP \
     --parameter-overrides $params \
     --env-vars lambda/functions/env.json & pids="${pids-} $!"
-status=$((status + $?))
 
 
 # ----------------------------------------------------------
-#  Pruebas AWS Lambda
+#  Execute AWS Lambda
 # ----------------------------------------------------------
 
 cd lambda/functions
@@ -83,22 +95,30 @@ lambdas="
     arv-update-user
 "
 
+# Install dependencies
 for lambda in $lambdas
 do
-    cd $lambda; npm install; npm run test
-    status=$((status + $?))
-    cd ../
+    echo
+    echo "----------------------------"
+    echo "Installing lambda: $lambda"
+    echo "----------------------------"
+    cd $lambda; npm install; cd ../
 done
 
-# Detener servicios
-kill -9 $pids
-docker kill aws-arzov
-docker rm aws-arzov
-docker network rm arzov-local-network
+# Execute tests
+for lambda in $lambdas
+do
+    echo
+    echo "----------------------------"
+    echo "Executing lambda: $lambda"
+    echo "----------------------------"
+    cd $lambda; npm run test; cd ../
+done
 
-# Remover archivos temporales
+# Stop services
+kill $pids
+docker rm arzov-dynamodb -f
+
+# Remove temp files
 cd ../../
 rm template.yml
-status=$((status + $?))
-
-exit $status

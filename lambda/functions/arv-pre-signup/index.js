@@ -1,27 +1,29 @@
 /**
- * Registrar usuario
+ * SignUp user
  * @author Franco Barrientos <franco.barrientos@arzov.com>
  */
-
 
 const aws = require('aws-sdk');
 const arvEnvs = require('arv-envs');
 const dql = require('utils/dql');
 const fns = require('utils/fns');
 const arvUtils = require('arv-utils');
-const moment = require('moment');
 const cognito = new aws.CognitoIdentityServiceProvider();
-let options = arvEnvs.gbl.DYNAMODB_CONFIG;
+let optionsDynamodb = arvEnvs.gbl.DYNAMODB_CONFIG;
+let optionsLambda = arvEnvs.gbl.LAMBDA_CONFIG;
 
-if (process.env.RUN_MODE === 'LOCAL') options = arvEnvs.dev.DYNAMODB_CONFIG;
+if (process.env.RUN_MODE === 'LOCAL') {
+    optionsDynamodb = arvEnvs.dev.DYNAMODB_CONFIG;
+    optionsLambda = arvEnvs.dev.LAMBDA_CONFIG;
+}
 
-const dynamodb = new aws.DynamoDB(options);
-
+const dynamodb = new aws.DynamoDB(optionsDynamodb);
+const lambda = new aws.Lambda(optionsLambda);
 
 exports.handler = (event, context, callback) => {
     let provider = arvUtils.getProviderFromUserName(event.userName);
     let hashKey = `${arvEnvs.pfx.USR}${event.request.userAttributes.email}`;
-    let registerDate = moment().format();
+    let registerDate = new Date().toISOString();
     let firstName = event.request.userAttributes.name;
     let lastName = event.request.userAttributes.family_name;
     let providers = [provider];
@@ -31,129 +33,230 @@ exports.handler = (event, context, callback) => {
     let gender = event.request.userAttributes.gender;
     let picture = event.request.userAttributes.picture;
 
-    // Verificar parametros nulos
+    // Validate nulls
     firstName = firstName ? firstName : '';
     lastName = lastName ? lastName : '';
     birthdate = birthdate ? birthdate : '';
     gender = gender ? gender : '';
     picture = picture ? picture : '';
 
-    // Verificar imagen de Facebook
+    // Set picture for Facebook
     if (picture) {
-        picture = picture.substr(0, 5) === 'https' ? picture : JSON.parse(picture).data.url;
+        picture =
+            picture.substr(0, 5) === 'https'
+                ? picture
+                : JSON.parse(picture).data.url;
     }
 
-    // Buscar si usuario existe en DynamoDB
-    dql.getUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, function(err, data) {
+    // Validate if user already exist
+    let params = { FunctionName: 'arv-get-user' };
+
+    params.Payload = JSON.stringify({
+        email: hashKey.split('#')[1],
+    });
+
+    lambda.invoke(params, function (err, data) {
         if (err) callback(err);
         else {
-            // El usuario existe
-            if (Object.entries(data).length > 0 && data.constructor === Object) {
-                let registeredProviders = data.Item.providers.SS;
-                let registeredProviderId = data.Item.providerId.M;
-                let registeredLastName = data.Item.lastName.S;
-                let registeredBirthdate = data.Item.birthdate.S;
-                let registeredGender = data.Item.gender.S;
-                let registeredPicture = data.Item.picture.S;
+            const response = JSON.parse(data.Payload);
 
-                // Proveedor entrante existe registrado en el usuario
-                if (registeredProviders.indexOf(provider) >= 0) callback(null, event);
+            // User exist
+            if (
+                Object.entries(response).length > 0 &&
+                response.constructor === Object
+            ) {
+                let registeredProviders = response.providers;
+                let registeredProviderId = JSON.parse(response.providerId);
+                let registeredLastName = response.lastName;
+                let registeredBirthdate = response.birthdate;
+                let registeredGender = response.gender;
+                let registeredPicture = response.picture;
 
-                // Proveedor entrante no esta registrado
+                // Event's provider already exist in user's providers
+                if (registeredProviders.indexOf(provider) >= 0)
+                    callback(null, event);
+                // Event's provider is not already registered
                 else {
-                    // Proveedor entrante es una red social
+                    // Event's provider belong to a social media
                     if (['Facebook', 'Google'].indexOf(provider) >= 0) {
-                        // Actualizar proveedor
+                        // Update provider
                         registeredProviders.push(provider);
-                        registeredProviderId[provider] = JSON.parse(`{"S":"${event.userName}"}`);
-                        registeredLastName = registeredLastName ? registeredLastName : lastName;
-                        registeredBirthdate = registeredBirthdate ? registeredBirthdate : birthdate;
-                        registeredGender = registeredGender ? registeredGender : gender;
-                        registeredPicture = registeredPicture ? registeredPicture : picture;
+                        registeredProviderId[provider] = JSON.parse(
+                            `{"S":"${event.userName}"}`
+                        );
 
-                        dql.updateUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, registeredProviders,
-                            registeredProviderId, verified, registeredLastName,
-                            registeredBirthdate, registeredGender, registeredPicture, function(err, data) {
+                        // Fill fields from social media provider, just in case
+                        registeredLastName = registeredLastName
+                            ? registeredLastName
+                            : lastName;
+                        registeredBirthdate = registeredBirthdate
+                            ? registeredBirthdate
+                            : birthdate;
+                        registeredGender = registeredGender
+                            ? registeredGender
+                            : gender;
+                        registeredPicture = registeredPicture
+                            ? registeredPicture
+                            : picture;
+
+                        let params = { FunctionName: 'arv-update-user' };
+
+                        params.Payload = JSON.stringify({
+                            email: hashKey.split('#')[1],
+                            firstName: response.firstName,
+                            lastName: registeredLastName,
+                            birthdate: registeredBirthdate,
+                            gender: registeredGender,
+                            picture: registeredPicture,
+                            providers: registeredProviders,
+                            providerId: JSON.stringify(registeredProviderId),
+                            registerDate: response.registerDate,
+                            verified: response.verified,
+                        });
+
+                        lambda.invoke(params, function (err, data) {
                             if (err) callback(err);
                             else {
-                                if (process.env.RUN_MODE === 'LOCAL') callback(null, event);
+                                if (process.env.RUN_MODE === 'LOCAL')
+                                    callback(null, event);
 
-                                // Enlazar cuentas
-                                let registeredUsername = event.request.userAttributes.email;
+                                // Link accounts
+                                let registeredUsername =
+                                    event.request.userAttributes.email;
 
-                                // Si el usuario no esta registrado con Cognito
-                                // entonces se debe buscar el id de la red social
-                                // correspondiente
-                                if (registeredProviders.indexOf('Cognito') < 0) {
-                                    registeredUsername = provider === 'Facebook' ?
-                                        registeredProviderId.Google.S : registeredProviderId.Facebook.S;
+                                /**
+                                 * If the user is not registered with Cognito
+                                 * then the correspondent id of the social
+                                 * network must be found
+                                 */
+                                if (
+                                    registeredProviders.indexOf('Cognito') < 0
+                                ) {
+                                    registeredUsername =
+                                        provider === 'Facebook'
+                                            ? registeredProviderId.Google.S
+                                            : registeredProviderId.Facebook.S;
                                 }
 
                                 let params = {
                                     Username: registeredUsername,
-                                    UserPoolId: event.userPoolId
-                                }
+                                    UserPoolId: event.userPoolId,
+                                };
 
-                                // Revisar primero si el usuario esta verificado
-                                cognito.adminGetUser(params, function(err, data) {
-                                    if (err) callback(err);
-                                    else {
-                                        // Si no esta verificado entonces verificar
-                                        // ya que el usuario esta entrando con una
-                                        // red social y eso lo verifica
-                                        if (data.UserStatus === 'UNCONFIRMED') {
-                                            cognito.adminConfirmSignUp(params, function(err, data) {
-                                                if (err) callback(err);
-                                                else {
-                                                    params.UserAttributes = [{
-                                                        Name: 'email_verified',
-                                                        Value: 'true'
-                                                    }]
-                                                    
-                                                    // Verificar email
-                                                    cognito.adminUpdateUserAttributes(params, function(err, data) {
+                                // Check if user is already verified
+                                cognito.adminGetUser(
+                                    params,
+                                    function (err, data) {
+                                        if (err) callback(err);
+                                        else {
+                                            /**
+                                             * If not verified then verify
+                                             * since the user is entering with a
+                                             * social network and that verifies it
+                                             */
+                                            if (
+                                                data.UserStatus ===
+                                                'UNCONFIRMED'
+                                            ) {
+                                                cognito.adminConfirmSignUp(
+                                                    params,
+                                                    function (err, data) {
                                                         if (err) callback(err);
-                                                        else
-                                                            fns.linkUser(cognito, registeredUsername, provider,
-                                                                event, callback);
-                                                    });
-                                                }
-                                            });
-                                        } else 
-                                            fns.linkUser(cognito, registeredUsername, provider,
-                                                event, callback);
-                                    };
-                                });
+                                                        else {
+                                                            params.UserAttributes = [
+                                                                {
+                                                                    Name:
+                                                                        'email_verified',
+                                                                    Value:
+                                                                        'true',
+                                                                },
+                                                            ];
+
+                                                            // Verify email
+                                                            cognito.adminUpdateUserAttributes(
+                                                                params,
+                                                                function (
+                                                                    err,
+                                                                    data
+                                                                ) {
+                                                                    if (err)
+                                                                        callback(
+                                                                            err
+                                                                        );
+                                                                    else
+                                                                        fns.linkUser(
+                                                                            cognito,
+                                                                            registeredUsername,
+                                                                            provider,
+                                                                            event,
+                                                                            callback
+                                                                        );
+                                                                }
+                                                            );
+                                                        }
+                                                    }
+                                                );
+                                            } else
+                                                fns.linkUser(
+                                                    cognito,
+                                                    registeredUsername,
+                                                    provider,
+                                                    event,
+                                                    callback
+                                                );
+                                        }
+                                    }
+                                );
                             }
                         });
                     }
 
-                    // Proveedor entrante es Cognito
+                    // Event's provider is Cognito
                     else {
-                        // Se usa # para poder parsear mensaje en frontend
+                        // '#' is used for split message from frontend
                         if (registeredProviders.length > 1) {
-                            let err = new Error("#El correo ya se ha registrado con Facebook y Google.#");
+                            let err = new Error(
+                                '#El correo ya se ha registrado con Facebook y Google.#'
+                            );
                             callback(err, event);
-                        }
-                        else if (registeredProviders.indexOf('Facebook') >= 0) {
-                            let err = new Error("#El correo ya se ha registrado con Facebook.#");
+                        } else if (
+                            registeredProviders.indexOf('Facebook') >= 0
+                        ) {
+                            let err = new Error(
+                                '#El correo ya se ha registrado con Facebook.#'
+                            );
                             callback(err, event);
-                        }
-                        else {
-                            let err = new Error("#El correo ya se ha registrado con Google.#");
+                        } else {
+                            let err = new Error(
+                                '#El correo ya se ha registrado con Google.#'
+                            );
                             callback(err, event);
                         }
                     }
                 }
             }
 
-            // No existe el usuario
+            // User doesn't exist
             else
-                dql.addUser(dynamodb, process.env.DB_ARV_001, hashKey, hashKey, registerDate, firstName, lastName,
-                    providers, providerId, verified, birthdate, gender, picture, function(err, data) {
-                    if (err) callback(err);
-                    else callback(null, event);
-                });
+                dql.addUser(
+                    dynamodb,
+                    process.env.DB_ARV_001,
+                    hashKey,
+                    hashKey,
+                    registerDate,
+                    firstName,
+                    lastName,
+                    providers,
+                    providerId,
+                    verified,
+                    birthdate,
+                    gender,
+                    picture,
+                    function (err, data) {
+                        if (err) callback(err);
+                        else callback(null, event);
+                    }
+                );
         }
     });
 };

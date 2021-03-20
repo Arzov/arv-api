@@ -4,7 +4,7 @@
     DependsOn: LDLayerARVEnvs
     Properties:
       FunctionName: arv-update-user
-      CodeUri: lambda/functions/arv-update-user/
+      CodeUri: !Join [ "/", [ !Ref HostRoot, "lambda/functions/arv-update-user/" ] ]
       Role: !GetAtt IARoleARVLambda.Arn
       Layers:
         - !Ref LDLayerARVEnvs

@@ -1,40 +1,48 @@
 /**
- * Queries sobre AWS DynamoDB
+ * Queries on AWS DynamoDB
  * @author Franco Barrientos <franco.barrientos@arzov.com>
  */
 
-
 /**
- * Obtiene informacion del usuario
- * @param {Object} db Conexion a DynamoDB
- * @param {String} tableName Nombre de la tabla
+ * Get user
+ * @param {Object} db DynamoDB client
+ * @param {String} tableName Table name
  * @param {String} hashKey Email
  * @param {String} rangeKey Email
- * @param {Function} fn Funcion callback
+ * @param {Function} fn Callback
  */
 const getUser = (db, tableName, hashKey, rangeKey, fn) => {
-    db.getItem({
-        TableName: tableName,
-        Key: {
-            hashKey: { S: hashKey },
-            rangeKey: { S: rangeKey }
+    db.getItem(
+        {
+            TableName: tableName,
+            Key: {
+                hashKey: { S: hashKey },
+                rangeKey: { S: rangeKey },
+            },
+        },
+        function (err, data) {
+            if (err) return fn(err);
+            else if (
+                Object.keys(data).length === 0 &&
+                data.constructor === Object
+            ) {
+                fn(null, {});
+            } else {
+                fn(null, {
+                    email: data.Item.hashKey.S.split('#')[1],
+                    firstName: data.Item.firstName.S,
+                    lastName: data.Item.lastName.S,
+                    providerId: JSON.stringify(data.Item.providerId.M),
+                    providers: data.Item.providers.SS,
+                    registerDate: data.Item.registerDate.S,
+                    verified: data.Item.verified.BOOL,
+                    birthdate: data.Item.birthdate.S,
+                    gender: data.Item.gender.S,
+                    picture: data.Item.picture.S,
+                });
+            }
         }
-    }, function(err, data) {
-        if (err) return fn(err);
-        else
-            fn(null, {
-                email: data.Item.hashKey.S.split('#')[1],
-                firstName: data.Item.firstName.S,
-                lastName: data.Item.lastName.S,
-                providerId: JSON.stringify(data.Item.providerId.M),
-                providers: data.Item.providers.SS,
-                registerDate: data.Item.registerDate.S,
-                verified: data.Item.verified.BOOL,
-                birthdate: data.Item.birthdate.S,
-                gender: data.Item.gender.S,
-                picture: data.Item.picture.S
-            });
-    });
-}
+    );
+};
 
-module.exports.getUser = getUser
+module.exports.getUser = getUser;

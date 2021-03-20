@@ -6,7 +6,7 @@
       - LDLayerARVPkgs
     Properties:
       FunctionName: arv-post-confirmation
-      CodeUri: lambda/functions/arv-post-confirmation/
+      CodeUri: !Join [ "/", [ !Ref HostRoot, "lambda/functions/arv-post-confirmation/" ] ]
       Role: !GetAtt IARoleARVLambda.Arn
       Layers:
         - !Ref LDLayerARVEnvs

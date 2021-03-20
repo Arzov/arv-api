@@ -1,71 +1,71 @@
 [
-   {
-      "version": "1",
-      "region": "us-east-1",
-      "userPoolId": "",
-      "userName": "Google_115619098971084199595",
-      "callerContext": {
-         "awsSdkVersion": "aws-sdk-unknown-unknown",
-         "clientId": ""
-      },
-      "triggerSource": "PostConfirmation_ConfirmSignUp",
-      "request": {
-         "userAttributes": {
-            "sub": "81ce6d09-d419-4390-b138-68d6619bb589",
-            "identities": "[{\"userId\":\"115619098971084199595\",\"providerName\":\"Google\",\"providerType\":\"Google\",\"issuer\":null,\"primary\":true,\"dateCreated\":1590851317883}]",
-            "cognito:user_status": "EXTERNAL_PROVIDER",
-            "name": "Franco",
-            "family_name": "Barrientos",
-            "picture": "https://lh3.googleusercontent.com/a-/AOh14GgWjEj2cnH3clfJHqQiMnQ7yqFiZ3ImefchqcWxPQ=s96-c",
-            "email": "fjbarrientosg@gmail.com"
-         }
-      },
-      "response": {}
-   },
-   {
-      "version": "1",
-      "region": "us-east-1",
-      "userPoolId": "",
-      "userName": "Facebook_10217846363663521",
-      "callerContext": {
-         "awsSdkVersion": "aws-sdk-unknown-unknown",
-         "clientId": ""
-      },
-      "triggerSource": "PostConfirmation_ConfirmSignUp",
-      "request": {
-         "userAttributes": {
-            "sub": "aa5cf9da-6aa5-47c1-a6c2-4195f5cbd01d",
-            "identities": "[{\"userId\":\"10217846363663521\",\"providerName\":\"Facebook\",\"providerType\":\"Facebook\",\"issuer\":null,\"primary\":true,\"dateCreated\":1590870187937}]",
-            "cognito:user_status": "EXTERNAL_PROVIDER",
-            "name": "Franco",
-            "family_name": "Barrientos",
-            "picture": "{\"data\":{\"height\":50,\"is_silhouette\":false,\"url\":\"https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10217846363663521&height=50&width=50&ext=1593462184&hash=AeT6ufYDgveULGEG\",\"width\":50}}",
-            "email": "fjbarrientosg@gmail.com"
-         }
-      },
-      "response": {}
-   },
-   {
-      "version": "1",
-      "region": "us-east-1",
-      "userPoolId": "",
-      "userName": "franco.barrientos@arzov.com",
-      "callerContext": {
-         "awsSdkVersion": "aws-sdk-unknown-unknown",
-         "clientId": ""
-      },
-      "triggerSource": "PostConfirmation_ConfirmSignUp",
-      "request": {
-         "userAttributes": {
-            "sub": "bb366753-511c-4d47-b13c-09747a2bcc2d",
-            "cognito:user_status": "CONFIRMED",
-            "email_verified": "true",
-            "birthdate": "1989-05-15",
-            "gender": "M",
-            "name": "Franco",
-            "email": "franco.barrientos@arzov.com"
-         }
-      },
-      "response": {}
-   }
+    {
+        "version": "1",
+        "region": "us-east-1",
+        "userPoolId": "",
+        "userName": "Google_115619098971084199595",
+        "callerContext": {
+            "awsSdkVersion": "aws-sdk-unknown-unknown",
+            "clientId": ""
+        },
+        "triggerSource": "PostConfirmation_ConfirmSignUp",
+        "request": {
+            "userAttributes": {
+                "sub": "81ce6d09-d419-4390-b138-68d6619bb589",
+                "identities": "[{\"userId\":\"115619098971084199595\",\"providerName\":\"Google\",\"providerType\":\"Google\",\"issuer\":null,\"primary\":true,\"dateCreated\":1590851317883}]",
+                "cognito:user_status": "EXTERNAL_PROVIDER",
+                "name": "Franco",
+                "family_name": "Barrientos",
+                "picture": "https://lh3.googleusercontent.com/a-/AOh14GgWjEj2cnH3clfJHqQiMnQ7yqFiZ3ImefchqcWxPQ=s96-c",
+                "email": "fjbarrientosg@gmail.com"
+            }
+        },
+        "response": {}
+    },
+    {
+        "version": "1",
+        "region": "us-east-1",
+        "userPoolId": "",
+        "userName": "Facebook_10217846363663521",
+        "callerContext": {
+            "awsSdkVersion": "aws-sdk-unknown-unknown",
+            "clientId": ""
+        },
+        "triggerSource": "PostConfirmation_ConfirmSignUp",
+        "request": {
+            "userAttributes": {
+                "sub": "aa5cf9da-6aa5-47c1-a6c2-4195f5cbd01d",
+                "identities": "[{\"userId\":\"10217846363663521\",\"providerName\":\"Facebook\",\"providerType\":\"Facebook\",\"issuer\":null,\"primary\":true,\"dateCreated\":1590870187937}]",
+                "cognito:user_status": "EXTERNAL_PROVIDER",
+                "name": "Franco",
+                "family_name": "Barrientos",
+                "picture": "{\"data\":{\"height\":50,\"is_silhouette\":false,\"url\":\"https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=10217846363663521&height=50&width=50&ext=1593462184&hash=AeT6ufYDgveULGEG\",\"width\":50}}",
+                "email": "fjbarrientosg@gmail.com"
+            }
+        },
+        "response": {}
+    },
+    {
+        "version": "1",
+        "region": "us-east-1",
+        "userPoolId": "",
+        "userName": "franco.barrientos@arzov.com",
+        "callerContext": {
+            "awsSdkVersion": "aws-sdk-unknown-unknown",
+            "clientId": ""
+        },
+        "triggerSource": "PostConfirmation_ConfirmSignUp",
+        "request": {
+            "userAttributes": {
+                "sub": "bb366753-511c-4d47-b13c-09747a2bcc2d",
+                "cognito:user_status": "CONFIRMED",
+                "email_verified": "true",
+                "birthdate": "1989-05-15",
+                "gender": "M",
+                "name": "Franco",
+                "email": "franco.barrientos@arzov.com"
+            }
+        },
+        "response": {}
+    }
 ]

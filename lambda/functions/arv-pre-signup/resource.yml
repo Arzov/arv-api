@@ -6,7 +6,7 @@
       - LDLayerARVPkgs
     Properties:
       FunctionName: arv-pre-signup
-      CodeUri: lambda/functions/arv-pre-signup/
+      CodeUri: !Join [ "/", [ !Ref HostRoot, "lambda/functions/arv-pre-signup/" ] ]
       Role: !GetAtt IARoleARVLambda.Arn
       Layers:
         - !Ref LDLayerARVEnvs

@@ -9,9 +9,13 @@
             email: String!,
             firstName: String!,
             lastName: String!,
-            picture: String!,
+            providerId: String!,
+            providers: [String]!,
+            registerDate: String!,
+            verified: Boolean!,
             birthdate: String!,
-            gender: String!
+            gender: String!,
+            picture: String!
           ): User
         }
 
