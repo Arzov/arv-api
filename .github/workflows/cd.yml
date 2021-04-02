@@ -1,4 +1,6 @@
+# ==============================
 # Continuous Deployment
+# ==============================
 name: CD
 
 on:
@@ -16,8 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Run deploy
-        if: github.ref == 'refs/heads/develop'
+      # ------------------------------
+      # Run deploy DEV
+      # ------------------------------
+      - name: Run deploy DEV
+        if: github.base_ref == 'develop'
         env:
           # GLOBAL
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_DEV }}
