@@ -21,7 +21,7 @@ exports.handler = (event, context, callback) => {
     const picture = event.picture;
     const providers = event.providers;
     const providerId = JSON.parse(event.providerId);
-    const registerDate = event.registerDate;
+    const joinedOn = event.joinedOn;
     const verified = event.verified;
 
     dql.updateUser(
@@ -34,7 +34,7 @@ exports.handler = (event, context, callback) => {
         verified,
         firstName,
         lastName,
-        registerDate,
+        joinedOn,
         birthdate,
         gender,
         picture,

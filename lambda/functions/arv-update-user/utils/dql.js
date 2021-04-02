@@ -11,7 +11,7 @@
  * @param {String} rangeKey Email
  * @param {String} firstName Firstname
  * @param {String} lastName Lastname
- * @param {String} registerDate Resgister date
+ * @param {String} joinedOn Register date
  * @param {String[]} providers Providers list (Google, Facebook, Cognito)
  * @param {Object} providerId Providers id
  * @param {Boolean} verified Verified indicator
@@ -30,7 +30,7 @@ const updateUser = (
     verified,
     firstName,
     lastName,
-    registerDate,
+    joinedOn,
     birthdate,
     gender,
     picture,
@@ -49,7 +49,7 @@ const updateUser = (
                 verified = :v3,\
                 firstName = :v4,\
                 lastName = :v5,\
-                registerDate = :v6, \
+                joinedOn = :v6, \
                 birthdate = :v7, \
                 gender = :v8, \
                 picture = :v9',
@@ -59,7 +59,7 @@ const updateUser = (
                 ':v3': { BOOL: verified },
                 ':v4': { S: firstName },
                 ':v5': { S: lastName },
-                ':v6': { S: registerDate },
+                ':v6': { S: joinedOn },
                 ':v7': { S: birthdate },
                 ':v8': { S: gender },
                 ':v9': { S: picture },
@@ -72,7 +72,7 @@ const updateUser = (
                     email: hashKey.split('#')[1],
                     firstName,
                     lastName,
-                    registerDate,
+                    joinedOn,
                     birthdate,
                     gender,
                     picture,

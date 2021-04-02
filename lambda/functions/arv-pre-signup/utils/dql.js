@@ -9,7 +9,7 @@
  * @param {String} tableName Table name
  * @param {String} hashKey Email
  * @param {String} rangeKey Email
- * @param {String} registerDate Resgister date
+ * @param {String} joinedOn Register date
  * @param {String} firstName Firstname
  * @param {String} lastName Lastname
  * @param {String[]} providers Providers list (Google, Facebook, Cognito)
@@ -25,7 +25,7 @@ const addUser = (
     tableName,
     hashKey,
     rangeKey,
-    registerDate,
+    joinedOn,
     firstName,
     lastName,
     providers,
@@ -42,7 +42,7 @@ const addUser = (
             Item: {
                 hashKey: { S: hashKey },
                 rangeKey: { S: rangeKey },
-                registerDate: { S: registerDate },
+                joinedOn: { S: joinedOn },
                 firstName: { S: firstName },
                 lastName: { S: lastName },
                 providers: { SS: providers },

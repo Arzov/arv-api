@@ -34,7 +34,7 @@ const getUser = (db, tableName, hashKey, rangeKey, fn) => {
                     lastName: data.Item.lastName.S,
                     providerId: JSON.stringify(data.Item.providerId.M),
                     providers: data.Item.providers.SS,
-                    registerDate: data.Item.registerDate.S,
+                    joinedOn: data.Item.joinedOn.S,
                     verified: data.Item.verified.BOOL,
                     birthdate: data.Item.birthdate.S,
                     gender: data.Item.gender.S,

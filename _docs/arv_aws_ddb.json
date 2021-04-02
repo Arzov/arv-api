@@ -3,7 +3,7 @@
   "ModelMetadata": {
     "Author": "Franco Barrientos",
     "DateCreated": "Aug 20, 2020, 10:09 AM",
-    "DateLastModified": "Sep 05, 2020, 02:03 PM",
+    "DateLastModified": "Apr 02, 2021, 01:20 PM",
     "Description": "Modelo de datos para API de Arzov.",
     "Version": "2.0",
     "AWSService": "Amazon DynamoDB"
@@ -31,7 +31,7 @@
           "AttributeType": "S"
         },
         {
-          "AttributeName": "registerDate",
+          "AttributeName": "joinedOn",
           "AttributeType": "S"
         },
         {
@@ -69,10 +69,10 @@
           "TableData": [
             {
               "hashKey": {
-                "S": "USR#fjbarrientosg@gmail.com"
+                "S": "USR#franco.barrientos@arzov.com"
               },
               "rangeKey": {
-                "S": "USR#fjbarrientosg@gmail.com"
+                "S": "USR#franco.barrientos@arzov.com"
               },
               "firstName": {
                 "S": "Franco"
@@ -80,8 +80,8 @@
               "lastName": {
                 "S": "Barrientos"
               },
-              "registerDate": {
-                "S": "2020-06-17T21:27:51+00:00"
+              "joinedOn": {
+                "S": "2021-03-20T17:08:17.230Z"
               },
               "providers": {
                 "SS": [
@@ -109,7 +109,7 @@
                 "S": "M"
               },
               "picture": {
-                "S": "https://lh3.googleusercontent.com/a-/AOh14GgWjEj2cnH3clfJHqQiMnQ7yqFiZ3ImefchqcWxPQ=s96-c"
+                "S": "https://lh3.googleusercontent.com/-Ucf-9BmPEEY/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuckv62LGGbAiDB0IP-k-sLEg3Zrx0w/s96-c/photo.jpg"
               }
             },
             {
@@ -122,8 +122,8 @@
               "firstName": {
                 "S": "Jesús"
               },
-              "registerDate": {
-                "S": "2020-06-17T21:27:51+00:00"
+              "joinedOn": {
+                "S": "2021-03-20T17:08:17.230Z"
               },
               "providers": {
                 "SS": [
@@ -151,7 +151,7 @@
           "NonKeyAttributes": [
             "firstName",
             "lastName",
-            "registerDate",
+            "joinedOn",
             "providers",
             "providerId",
             "verified",

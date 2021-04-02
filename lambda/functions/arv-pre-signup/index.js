@@ -23,7 +23,7 @@ const lambda = new aws.Lambda(optionsLambda);
 exports.handler = (event, context, callback) => {
     let provider = arvUtils.getProviderFromUserName(event.userName);
     let hashKey = `${arvEnvs.pfx.USR}${event.request.userAttributes.email}`;
-    let registerDate = new Date().toISOString();
+    let joinedOn = new Date().toISOString();
     let firstName = event.request.userAttributes.name;
     let lastName = event.request.userAttributes.family_name;
     let providers = [provider];
@@ -110,7 +110,7 @@ exports.handler = (event, context, callback) => {
                             picture: registeredPicture,
                             providers: registeredProviders,
                             providerId: JSON.stringify(registeredProviderId),
-                            registerDate: response.registerDate,
+                            joinedOn: response.joinedOn,
                             verified: response.verified,
                         });
 
@@ -243,7 +243,7 @@ exports.handler = (event, context, callback) => {
                     process.env.DB_ARV_001,
                     hashKey,
                     hashKey,
-                    registerDate,
+                    joinedOn,
                     firstName,
                     lastName,
                     providers,
