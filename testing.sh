@@ -102,7 +102,7 @@ do
     echo "----------------------------"
     echo "Installing lambda: $lambda"
     echo "----------------------------"
-    cd $lambda; npm install; cd ../
+    cd $lambda; yarn; cd ../
 done
 
 # Execute tests

@@ -38,7 +38,7 @@ exports.handler = (event, context, callback) => {
                     picture: response.picture,
                     providers: response.providers,
                     providerId: response.providerId,
-                    registerDate: response.registerDate,
+                    joinedOn: response.joinedOn,
                     verified: true,
                 });
                 lambda.invoke(params, function (err, data) {

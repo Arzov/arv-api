@@ -11,7 +11,7 @@
             lastName: String!,
             providerId: String!,
             providers: [String]!,
-            registerDate: String!,
+            joinedOn: String!,
             verified: Boolean!,
             birthdate: String!,
             gender: String!,
@@ -29,7 +29,7 @@
           lastName: String
           providerId: String
           providers: [String]
-          registerDate: String
+          joinedOn: String
           verified: Boolean
           birthdate: String
           gender: String
