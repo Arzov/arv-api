@@ -3,7 +3,7 @@
   "ModelMetadata": {
     "Author": "Franco Barrientos",
     "DateCreated": "Aug 20, 2020, 10:09 AM",
-    "DateLastModified": "Apr 02, 2021, 01:20 PM",
+    "DateLastModified": "Apr 10, 2021, 06:54 PM",
     "Description": "Modelo de datos para API de Arzov.",
     "Version": "2.0",
     "AWSService": "Amazon DynamoDB"
@@ -72,7 +72,7 @@
                 "S": "USR#franco.barrientos@arzov.com"
               },
               "rangeKey": {
-                "S": "USR#franco.barrientos@arzov.com"
+                "S": "META#franco.barrientos@arzov.com"
               },
               "firstName": {
                 "S": "Franco"
@@ -117,7 +117,7 @@
                 "S": "USR#jesus.barrientos@arzov.com"
               },
               "rangeKey": {
-                "S": "USR#jesus.barrientos@arzov.com"
+                "S": "META#jesus.barrientos@arzov.com"
               },
               "firstName": {
                 "S": "Jesús"
