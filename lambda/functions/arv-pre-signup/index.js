@@ -3,11 +3,12 @@
  * @author Franco Barrientos <franco.barrientos@arzov.com>
  */
 
-const aws = require('aws-sdk');
+const arvUtils = require('arv-utils');
 const arvEnvs = require('arv-envs');
+const aws = require('aws-sdk');
 const dql = require('utils/dql');
 const fns = require('utils/fns');
-const arvUtils = require('arv-utils');
+
 const cognito = new aws.CognitoIdentityServiceProvider();
 let optionsDynamodb = arvEnvs.gbl.DYNAMODB_CONFIG;
 let optionsLambda = arvEnvs.gbl.LAMBDA_CONFIG;
@@ -22,7 +23,8 @@ const lambda = new aws.Lambda(optionsLambda);
 
 exports.handler = (event, context, callback) => {
     let provider = arvUtils.getProviderFromUserName(event.userName);
-    let hashKey = `${arvEnvs.pfx.USR}${event.request.userAttributes.email}`;
+    let hashKey = `${arvEnvs.pfx.USER}${event.request.userAttributes.email}`;
+    let rangeKey = `${arvEnvs.pfx.METADATA}${event.request.userAttributes.email}`;
     let joinedOn = new Date().toISOString();
     let firstName = event.request.userAttributes.name;
     let lastName = event.request.userAttributes.family_name;
@@ -242,7 +244,7 @@ exports.handler = (event, context, callback) => {
                     dynamodb,
                     process.env.DB_ARV_001,
                     hashKey,
-                    hashKey,
+                    rangeKey,
                     joinedOn,
                     firstName,
                     lastName,

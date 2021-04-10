@@ -39,4 +39,4 @@ jobs:
           GOOGLE_APP_SECRET: ${{ secrets.GOOGLE_APP_SECRET_DEV }}
         run: |
           chmod +x deploy.sh
-          docker-compose up deploy-executor
+          docker-compose up --exit-code-from deploy-executor deploy-executor

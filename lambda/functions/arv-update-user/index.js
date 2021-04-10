@@ -3,9 +3,10 @@
  * @author Franco Barrientos <franco.barrientos@arzov.com>
  */
 
-const aws = require('aws-sdk');
 const arvEnvs = require('arv-envs');
+const aws = require('aws-sdk');
 const dql = require('utils/dql');
+
 let options = arvEnvs.gbl.DYNAMODB_CONFIG;
 
 if (process.env.RUN_MODE === 'LOCAL') options = arvEnvs.dev.DYNAMODB_CONFIG;
@@ -13,7 +14,8 @@ if (process.env.RUN_MODE === 'LOCAL') options = arvEnvs.dev.DYNAMODB_CONFIG;
 const dynamodb = new aws.DynamoDB(options);
 
 exports.handler = (event, context, callback) => {
-    const hashKey = `${arvEnvs.pfx.USR}${event.email}`;
+    const hashKey = `${arvEnvs.pfx.USER}${event.email}`;
+    const rangeKey = `${arvEnvs.pfx.METADATA}${event.email}`;
     const firstName = event.firstName;
     const lastName = event.lastName;
     const birthdate = event.birthdate;
@@ -28,7 +30,7 @@ exports.handler = (event, context, callback) => {
         dynamodb,
         process.env.DB_ARV_001,
         hashKey,
-        hashKey,
+        rangeKey,
         providers,
         providerId,
         verified,
