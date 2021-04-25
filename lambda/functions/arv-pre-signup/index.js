@@ -3,11 +3,17 @@
  * @author Franco Barrientos <franco.barrientos@arzov.com>
  */
 
+
+// packages
+
 const arvUtils = require('arv-utils');
 const arvEnvs = require('arv-envs');
 const aws = require('aws-sdk');
 const dql = require('utils/dql');
 const fns = require('utils/fns');
+
+
+// configurations
 
 const cognito = new aws.CognitoIdentityServiceProvider();
 let optionsDynamodb = arvEnvs.gbl.DYNAMODB_CONFIG;
@@ -21,7 +27,11 @@ if (process.env.RUN_MODE === 'LOCAL') {
 const dynamodb = new aws.DynamoDB(optionsDynamodb);
 const lambda = new aws.Lambda(optionsLambda);
 
+
+// execution
+
 exports.handler = (event, context, callback) => {
+
     let provider = arvUtils.getProviderFromUserName(event.userName);
     let hashKey = `${arvEnvs.pfx.USER}${event.request.userAttributes.email}`;
     let rangeKey = `${arvEnvs.pfx.METADATA}${event.request.userAttributes.email}`;
@@ -35,14 +45,18 @@ exports.handler = (event, context, callback) => {
     let gender = event.request.userAttributes.gender;
     let picture = event.request.userAttributes.picture;
 
-    // Validate nulls
+
+    // validate nulls
+
     firstName = firstName ? firstName : '';
     lastName = lastName ? lastName : '';
     birthdate = birthdate ? birthdate : '';
     gender = gender ? gender : '';
     picture = picture ? picture : '';
 
-    // Set picture for Facebook
+
+    // set picture for Facebook
+
     if (picture) {
         picture =
             picture.substr(0, 5) === 'https'
@@ -50,19 +64,24 @@ exports.handler = (event, context, callback) => {
                 : JSON.parse(picture).data.url;
     }
 
-    // Validate if user already exist
+
+    // validate if user already exist
+
     let params = { FunctionName: 'arv-get-user' };
 
     params.Payload = JSON.stringify({
         email: hashKey.split('#')[1],
     });
 
+
     lambda.invoke(params, function (err, data) {
         if (err) callback(err);
         else {
+
             const response = JSON.parse(data.Payload);
 
-            // User exist
+            // user exist
+
             if (
                 Object.entries(response).length > 0 &&
                 response.constructor === Object
@@ -74,20 +93,30 @@ exports.handler = (event, context, callback) => {
                 let registeredGender = response.gender;
                 let registeredPicture = response.picture;
 
-                // Event's provider already exist in user's providers
+
+                // event's provider already exist in user's providers
+
                 if (registeredProviders.indexOf(provider) >= 0)
                     callback(null, event);
-                // Event's provider is not already registered
+
+
+                // event's provider is not already registered
+
                 else {
-                    // Event's provider belong to a social media
+
+                    // event's provider belong to a social media
+
                     if (['Facebook', 'Google'].indexOf(provider) >= 0) {
-                        // Update provider
+
+                        // update provider
+
                         registeredProviders.push(provider);
                         registeredProviderId[provider] = JSON.parse(
                             `{"S":"${event.userName}"}`
                         );
 
-                        // Fill fields from social media provider, just in case
+                        // fill fields from social media provider, just in case
+
                         registeredLastName = registeredLastName
                             ? registeredLastName
                             : lastName;
@@ -104,17 +133,18 @@ exports.handler = (event, context, callback) => {
                         let params = { FunctionName: 'arv-update-user' };
 
                         params.Payload = JSON.stringify({
-                            email: hashKey.split('#')[1],
-                            firstName: response.firstName,
-                            lastName: registeredLastName,
-                            birthdate: registeredBirthdate,
-                            gender: registeredGender,
-                            picture: registeredPicture,
-                            providers: registeredProviders,
-                            providerId: JSON.stringify(registeredProviderId),
-                            joinedOn: response.joinedOn,
-                            verified: response.verified,
+                            email       : hashKey.split('#')[1],
+                            firstName   : response.firstName,
+                            lastName    : registeredLastName,
+                            birthdate   : registeredBirthdate,
+                            gender      : registeredGender,
+                            picture     : registeredPicture,
+                            providers   : registeredProviders,
+                            providerId  : JSON.stringify(registeredProviderId),
+                            joinedOn    : response.joinedOn,
+                            verified    : response.verified,
                         });
+
 
                         lambda.invoke(params, function (err, data) {
                             if (err) callback(err);
@@ -122,15 +152,18 @@ exports.handler = (event, context, callback) => {
                                 if (process.env.RUN_MODE === 'LOCAL')
                                     callback(null, event);
 
-                                // Link accounts
+                                // link accounts
+
                                 let registeredUsername =
                                     event.request.userAttributes.email;
+
 
                                 /**
                                  * If the user is not registered with Cognito
                                  * then the correspondent id of the social
                                  * network must be found
                                  */
+
                                 if (
                                     registeredProviders.indexOf('Cognito') < 0
                                 ) {
@@ -141,40 +174,44 @@ exports.handler = (event, context, callback) => {
                                 }
 
                                 let params = {
-                                    Username: registeredUsername,
-                                    UserPoolId: event.userPoolId,
+                                    Username    : registeredUsername,
+                                    UserPoolId  : event.userPoolId,
                                 };
 
-                                // Check if user is already verified
+                                // check if user is already verified
+
                                 cognito.adminGetUser(
                                     params,
+
                                     function (err, data) {
                                         if (err) callback(err);
                                         else {
+
                                             /**
                                              * If not verified then verify
                                              * since the user is entering with a
                                              * social network and that verifies it
                                              */
+
                                             if (
                                                 data.UserStatus ===
                                                 'UNCONFIRMED'
                                             ) {
                                                 cognito.adminConfirmSignUp(
                                                     params,
+
                                                     function (err, data) {
                                                         if (err) callback(err);
                                                         else {
                                                             params.UserAttributes = [
                                                                 {
-                                                                    Name:
-                                                                        'email_verified',
-                                                                    Value:
-                                                                        'true',
+                                                                    Name    : 'email_verified',
+                                                                    Value   : 'true',
                                                                 },
                                                             ];
 
-                                                            // Verify email
+                                                            // verify email
+
                                                             cognito.adminUpdateUserAttributes(
                                                                 params,
                                                                 function (
@@ -213,22 +250,29 @@ exports.handler = (event, context, callback) => {
                         });
                     }
 
-                    // Event's provider is Cognito
+                    // event's provider is Cognito
+
                     else {
+
                         // '#' is used for split message from frontend
+
                         if (registeredProviders.length > 1) {
                             let err = new Error(
                                 '#El correo ya se ha registrado con Facebook y Google.#'
                             );
                             callback(err, event);
-                        } else if (
+                        }
+
+                        else if (
                             registeredProviders.indexOf('Facebook') >= 0
                         ) {
                             let err = new Error(
                                 '#El correo ya se ha registrado con Facebook.#'
                             );
                             callback(err, event);
-                        } else {
+                        }
+
+                        else {
                             let err = new Error(
                                 '#El correo ya se ha registrado con Google.#'
                             );
@@ -238,7 +282,8 @@ exports.handler = (event, context, callback) => {
                 }
             }
 
-            // User doesn't exist
+            // user doesn't exist
+
             else
                 dql.addUser(
                     dynamodb,
@@ -254,6 +299,7 @@ exports.handler = (event, context, callback) => {
                     birthdate,
                     gender,
                     picture,
+
                     function (err, data) {
                         if (err) callback(err);
                         else callback(null, event);

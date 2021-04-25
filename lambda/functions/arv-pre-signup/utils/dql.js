@@ -3,22 +3,25 @@
  * @author Franco Barrientos <franco.barrientos@arzov.com>
  */
 
+
+// functions
+
 /**
  * Add user
- * @param {Object} db DynamoDB client
- * @param {String} tableName Table name
- * @param {String} hashKey Email
- * @param {String} rangeKey Email
- * @param {String} joinedOn Register date
- * @param {String} firstName Firstname
- * @param {String} lastName Lastname
- * @param {String[]} providers Providers list (Google, Facebook, Cognito)
- * @param {Object} providerId Providers id
- * @param {Boolean} verified Verified indicator
- * @param {String} birthdate Birthdate 'yyyy-mm-dd'
- * @param {String} gender Gender
- * @param {String} picture Picture URL
- * @param {Function} fn Callback
+ * @param   {Object}    db          DynamoDB client
+ * @param   {String}    tableName   Table name
+ * @param   {String}    hashKey     Email
+ * @param   {String}    rangeKey    Email
+ * @param   {String}    joinedOn    Register date
+ * @param   {String}    firstName   Firstname
+ * @param   {String}    lastName    Lastname
+ * @param   {String[]}  providers   Providers list (Google, Facebook, Cognito)
+ * @param   {Object}    providerId  Providers id
+ * @param   {Boolean}   verified    Verified indicator
+ * @param   {String}    birthdate   Birthdate 'yyyy-mm-dd'
+ * @param   {String}    gender      Gender
+ * @param   {String}    picture     Picture URL
+ * @param   {Function}  fn          Callback
  */
 const addUser = (
     db,
@@ -36,28 +39,33 @@ const addUser = (
     picture,
     fn
 ) => {
+
     db.putItem(
         {
             TableName: tableName,
             Item: {
-                hashKey: { S: hashKey },
-                rangeKey: { S: rangeKey },
-                joinedOn: { S: joinedOn },
-                firstName: { S: firstName },
-                lastName: { S: lastName },
-                providers: { SS: providers },
-                providerId: { M: providerId },
-                verified: { BOOL: verified },
-                birthdate: { S: birthdate },
-                gender: { S: gender },
-                picture: { S: picture },
+                hashKey     : { S       : hashKey },
+                rangeKey    : { S       : rangeKey },
+                joinedOn    : { S       : joinedOn },
+                firstName   : { S       : firstName },
+                lastName    : { S       : lastName },
+                providers   : { SS      : providers },
+                providerId  : { M       : providerId },
+                verified    : { BOOL    : verified },
+                birthdate   : { S       : birthdate },
+                gender      : { S       : gender },
+                picture     : { S       : picture },
             },
         },
+
         function (err, data) {
             if (err) fn(err);
             else fn(null, data);
         }
     );
 };
+
+
+// export modules
 
 module.exports.addUser = addUser;

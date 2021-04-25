@@ -1,19 +1,42 @@
+/**
+ * Test: arv-pre-signup
+ * @author Franco Barrientos <franco.barrientos@arzov.com>
+ */
+
+
+// packages
+
 const aws = require('aws-sdk');
 const arvEnvs = require('../../../layers/arv-envs/nodejs/node_modules/arv-envs');
 const events = require('../events/events.json');
 
+
+// execution
+
 describe('Test AWS Lambda: arv-pre-signup', () => {
+
     let lambda = new aws.Lambda(arvEnvs.dev.LAMBDA_CONFIG);
     let params = { FunctionName: 'arv-pre-signup' };
 
+
+    // test 1
+
     test('Evaluate: Google User (fjbarrientosg@gmail.com)', (done) => {
+
         params.Payload = JSON.stringify(events[0]);
 
         lambda.invoke(params, function (err, data) {
+
+            // error
+
             if (err) {
                 console.log(err);
                 expect(err.StatusCode).toBe(400);
-            } else {
+            }
+
+            // success
+
+            else {
                 let response = JSON.parse(data.Payload);
 
                 expect(data.StatusCode).toBe(200);
@@ -35,14 +58,25 @@ describe('Test AWS Lambda: arv-pre-signup', () => {
         });
     }, 60000);
 
+
+    // test 2
+
     test('Evaluate: Facebook User (fjbarrientosg@gmail.com)', (done) => {
+
         params.Payload = JSON.stringify(events[1]);
 
         lambda.invoke(params, function (err, data) {
+
+            // error
+
             if (err) {
                 console.log(err);
                 expect(err.StatusCode).toBe(400);
-            } else {
+            }
+
+            // success
+
+            else {
                 let response = JSON.parse(data.Payload);
 
                 expect(data.StatusCode).toBe(200);
@@ -63,6 +97,9 @@ describe('Test AWS Lambda: arv-pre-signup', () => {
             done();
         });
     }, 60000);
+
+
+    // test 3
 
     test('Evaluate: Cognito User (fjbarrientosg@gmail.com)', (done) => {
         params.Payload = JSON.stringify(events[2]);
@@ -85,14 +122,25 @@ describe('Test AWS Lambda: arv-pre-signup', () => {
         });
     }, 60000);
 
+
+    // test 4
+
     test('Evaluate: Cognito User (franco.barrientos@arzov.com)', (done) => {
+
         params.Payload = JSON.stringify(events[3]);
 
         lambda.invoke(params, function (err, data) {
+
+            // error
+
             if (err) {
                 console.log(err);
                 expect(err.StatusCode).toBe(400);
-            } else {
+            }
+
+            // success
+
+            else {
                 let response = JSON.parse(data.Payload);
 
                 expect(data.StatusCode).toBe(200);
