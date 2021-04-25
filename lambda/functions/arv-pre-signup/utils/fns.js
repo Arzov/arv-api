@@ -3,15 +3,19 @@
  * @author Franco Barrientos <franco.barrientos@arzov.com>
  */
 
+
+// functions
+
 /**
  * Create link with a existing account
- * @param {Object} cognito Cognito client
- * @param {String} registeredUsername Cognito username
- * @param {String} provider Event's provider
- * @param {Object} event Event
- * @param {Function} fn Callback
+ * @param   {Object}    cognito             Cognito client
+ * @param   {String}    registeredUsername  Cognito username
+ * @param   {String}    provider            Event's provider
+ * @param   {Object}    event               Event
+ * @param   {Function}  fn                  Callback
  */
 const linkUser = (cognito, registeredUsername, provider, event, fn) => {
+
     let params = {
         DestinationUser: {
             ProviderAttributeName: '',
@@ -31,5 +35,8 @@ const linkUser = (cognito, registeredUsername, provider, event, fn) => {
         else fn(null, event);
     });
 };
+
+
+// export modules
 
 module.exports.linkUser = linkUser;

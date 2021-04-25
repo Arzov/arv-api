@@ -3,9 +3,15 @@
  * @author Franco Barrientos <franco.barrientos@arzov.com>
  */
 
+
+// packages
+
 const arvEnvs = require('arv-envs');
 const aws = require('aws-sdk');
 const dql = require('utils/dql');
+
+
+// configurations
 
 let options = arvEnvs.gbl.DYNAMODB_CONFIG;
 
@@ -13,7 +19,11 @@ if (process.env.RUN_MODE === 'LOCAL') options = arvEnvs.dev.DYNAMODB_CONFIG;
 
 const dynamodb = new aws.DynamoDB(options);
 
+
+// execution
+
 exports.handler = (event, context, callback) => {
+
     const hashKey = `${arvEnvs.pfx.USER}${event.email}`;
     const rangeKey = `${arvEnvs.pfx.METADATA}${event.email}`;
     const firstName = event.firstName;
